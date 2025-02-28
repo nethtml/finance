@@ -18,10 +18,13 @@ D:\phpstudy\WWW\
 ├── api.php // API接口文件
 ├── config.php // 配置文件
 ├── index.html // 主页面
-├── uploads/ // 上传文件目录
-└── docs/ // 文档目录
-├── README.md // 开发文档
-└── DEV_LOG.md // 开发日志
+├── README.md // 项目说明文档
+├── assets/ // 静态资源目录（计划中）
+│ ├── css/ // CSS文件
+│ └── js/ // JavaScript文件
+├── docs/ // 文档目录
+│ └── DEV_LOG.md // 开发日志
+└── uploads/ // 上传文件目录
 ## 2. 环境配置
 
 ### 2.1 PHPStudy配置
@@ -96,3 +99,23 @@ html
 4. 优化数据库结构
 5. 添加数据备份功能
 6. 实现更详细的统计报表
+
+## 功能特性
+- [x] 基础记账功能
+- [x] 收支统计
+- [x] 图片上传
+- [ ] Bootstrap本地化（计划中）
+- [ ] 数据导出功能（计划中）
+- [ ] 统计图表（计划中）
+
+## 安装说明
+1. 配置PHPStudy环境
+2. 导入数据库
+3. 配置config.php
+4. 设置uploads目录权限
+
+## API文档
+详细的API文档请参见 [API文档](docs/api.md)（计划中）
+
+## 开发进度
+详细的开发日志请参见 [开发日志](docs/DEV_LOG.md)
