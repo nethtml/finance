@@ -21,7 +21,7 @@ D:\phpstudy\WWW\
 ├── uploads/ // 上传文件目录
 └── docs/ // 文档目录
 ├── README.md // 开发文档
-└── CHANGELOG.md // 开发日志
+└── DEV_LOG.md // 开发日志
 ## 2. 环境配置
 
 ### 2.1 PHPStudy配置

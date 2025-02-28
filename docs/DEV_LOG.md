@@ -63,7 +63,3 @@
    - 优化图片上传
    - 添加数据导出
    - 实现统计图表 
-
-
-   git config user.name "GreenLand"
-git config user.email "lizhenweig@gmail.com"
