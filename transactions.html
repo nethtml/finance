@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>财务管理系统</title>
+    <title>流水记录 - 财务管理系统</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/common.css" rel="stylesheet">
 </head>
@@ -23,16 +23,44 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link active" href="index.html">首页</a>
+                    <a class="nav-link" href="index.html">首页</a>
                     <a class="nav-link" href="dashboard.html">仪表盘</a>
-                    <a class="nav-link" href="transactions.html">流水记录</a>
+                    <a class="nav-link active" href="transactions.html">流水记录</a>
                     <a class="nav-link" href="admin.html">后台管理</a>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- 流水记录 -->
+    <div id="records" class="container mt-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="card-title mb-4">财务流水</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>分类</th>
+                                <th>收入</th>
+                                <th>支出</th>
+                                <th>凭证</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/common.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', loadRecords);
+    </script>
 </body>
 </html>

@@ -1,4 +1,12 @@
-# 个人财务管理系统开发文档
+# 财务管理系统
+
+## 最近更新（2024-03-21）
+### 代码重构
+1. 将单页面应用重构为多页面应用
+2. 提取并优化静态资源文件
+3. 优化代码结构
+
+### 当前目录结构
 
 ## 1. 项目概述
 
@@ -15,16 +23,25 @@
 
 ### 1.3 项目结构
 D:\phpstudy\WWW\
-├── api.php // API接口文件
-├── config.php // 配置文件
-├── index.html // 主页面
-├── README.md // 项目说明文档
-├── assets/ // 静态资源目录（计划中）
-│ ├── css/ // CSS文件
-│ └── js/ // JavaScript文件
-├── docs/ // 文档目录
-│ └── DEV_LOG.md // 开发日志
-└── uploads/ // 上传文件目录
+/
+├── README.md # 开发文档
+├── index.html # 空白首页
+├── dashboard.html # 仪表盘页面
+├── transactions.html # 流水记录页面
+├── admin.html # 后台管理页面
+├── adminmysql.php # 数据库管理
+├── api.php # API处理
+├── config.php # 数据库配置
+├── docs/ # 文档目录
+│ └── DEV_LOG.md # 开发日志
+├── uploads/ # 上传目录
+└── assets/ # 静态资源
+├── css/
+│ ├── bootstrap.min.css # Bootstrap样式
+│ └── common.css # 公共样式
+└── js/
+├── bootstrap.bundle.min.js # Bootstrap脚本
+└── common.js # 公共脚本
 ## 2. 环境配置
 
 ### 2.1 PHPStudy配置
@@ -119,3 +136,18 @@ html
 
 ## 开发进度
 详细的开发日志请参见 [开发日志](docs/DEV_LOG.md)
+
+### 技术细节
+1. CSS分离
+   - 将所有样式统一整合到common.css
+   - 保持原有的样式定义不变
+
+2. JavaScript分离
+   - 将所有脚本统一整合到common.js
+   - 删除了视图切换相关代码
+   - 优化了页面初始化逻辑
+
+3. 页面拆分
+   - 将原单页面拆分为4个独立页面
+   - 每个页面只包含必要的代码
+   - 保持了统一的导航栏结构

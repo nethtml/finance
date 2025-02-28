@@ -1,5 +1,29 @@
 # 开发日志
 
+## 2024-03-21 代码重构
+### 改动内容
+- 重构：将单页面应用转换为多页面应用
+- 优化：提取并统一管理公共CSS到common.css
+- 优化：提取并统一管理公共JavaScript到common.js
+- 优化：删除冗余的视图切换代码
+
+### 文件变更
+- 新增文件：
+  - assets/css/common.css
+  - assets/js/common.js
+  - dashboard.html
+  - transactions.html
+  - admin.html
+
+- 修改文件：
+  - index.html（简化为空白首页）
+  - README.md（更新文档）
+  - docs/DEV_LOG.md（添加日志）
+
+### 提交信息
+分支：feature/page-split
+描述：重构代码结构，优化静态资源管理
+
 ## [0.1.0] - 2024-02-28
 
 ### 已完成
