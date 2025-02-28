@@ -2,3 +2,4 @@ uploads/*
 vendor/
 .env
 *.log
+*.temp

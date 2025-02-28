@@ -1,11 +1,102 @@
-/* 导航栏样式 */
+/* 导航栏基础样式 */
 .navbar {
-    margin-bottom: 20px;
+    padding: 0;
+    background-color: #ffffff !important;
+    height: 75px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
+
+/* Header 样式 */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* 导航容器样式 */
+.navbar .container {
+    height: 100%;
+    padding: 0 1rem;
+}
+
+/* Logo样式 */
+.navbar-logo {
+    height: 40px;
+    width: auto;
+}
+
+/* 导航链接样式 */
+.nav-link {
+    padding: 1.5rem 1rem !important;
+    color: #666666 !important;
+}
+
+.nav-link.active {
+    color: #0d6efd !important;
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0d6efd;
+}
+
+/* 移动端样式 */
+@media (max-width: 991.98px) {
+    .navbar {
+        height: 75px;
+        padding: 0;
+    }
+
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .nav-link.active::after {
+        display: none;
+    }
+
+    /* 移动端激活状态改用背景色 */
+    .nav-link.active {
+        background-color: #f8f9fa;
+    }
+}
+
+/* 隐藏面包屑 */
+@media (max-width: 768px) {
+    .breadcrumb {
+        display: none !important;
+    }
+}
+
+/* 其他样式保持不变... */
 
 /* 公共容器样式 */
 .container {
-    margin-top: 20px;
+    max-width: 1140px !important;  /* 统一设置最大宽度 */
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 0.75rem);
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* 其他公共样式... */
@@ -71,4 +162,343 @@
     background: white;
     border-radius: 8px;
     padding: 16px;
+}
+
+/* 确保内容区域最小高度占满视口 */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+/* 主内容区域样式 */
+.main-content {
+    min-height: auto;  /* 移除最小高度限制 */
+    padding-bottom: 0; /* 移除底部内边距 */
+}
+
+.main-content .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 页脚曲线装饰 */
+.footer-curve {
+    position: relative;
+    height: 48px;
+    color: #1b2a4e;
+    overflow: hidden;
+    background-color: #fff; /* 确保与上方区块背景色一致 */
+}
+
+.footer-curve svg {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 2880px;
+    height: 48px;
+    transform: translateX(-50%);
+    min-width: 2880px;
+}
+
+/* 页脚主体样式 */
+.footer {
+    background-color: #1B2A4E;
+    padding: 5rem 0;
+    margin-top: 0;  /* 移除 footer 的顶部间距 */
+}
+
+/* 文字颜色类 */
+.text-light-blue {
+    color: #7f97b7 !important;
+}
+
+.text-medium-blue {
+    color: #3E6690 !important;
+}
+
+/* Logo 样式 */
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    background: #869AB8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #1B2A4E;
+}
+
+/* 链接悬停效果 */
+.text-light-blue:hover {
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+/* 社交图标样式 */
+.social-icons a {
+    font-size: 1.25rem;
+}
+
+/* 列表间距 */
+.list-unstyled li:last-child {
+    margin-bottom: 0;
+}
+
+/* 品牌部分 */
+.brand-section .brand-logo {
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1b2a4e;
+}
+
+.brand-section .brand-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.brand-section .brand-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+}
+
+/* 社交图标 */
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* 页脚标题 */
+.footer-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+/* 页脚链接 */
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* 版权信息 */
+.footer-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright, .icp {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .footer {
+        padding: 4rem 0 2rem;
+        margin-top: 0;  /* 确保移动端也无间距 */
+    }
+    
+    .brand-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .brand-section .d-flex {
+        justify-content: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+    
+    .footer-title {
+        margin-top: 1.5rem;
+    }
+    
+    .footer-bottom {
+        margin-top: 2rem;
+    }
+    
+    .copyright, .icp {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-curve svg {
+        width: 2880px; /* 保持固定宽度 */
+        transform: translateX(-50%); /* 只做居中，不缩放 */
+    }
+
+    .main-content {
+        padding-bottom: 0;  /* 确保移动端也没有底部内边距 */
+    }
+}
+
+/* 折叠按钮样式 */
+.navbar-toggler {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border: none;
+    color: #666666;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler i {
+    line-height: 1;
+}
+
+/* Why section 样式 */
+.why-section {
+    margin-top: 80px;
+    padding: 6rem 0;    /* 从 4rem 增加到 6rem，增加内部空间 */
+    margin-bottom: 0;
+    background-color: #F1F4F8 !important;
+}
+
+/* Why section 文字样式 */
+.why-section .display-4 {
+    font-size: 2.75rem;  /* 标题大小 */
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1b2a4e;
+}
+
+.why-section .lead {
+    font-size: 1.25rem;  /* 描述文字大小 */
+    line-height: 1.8;
+    color: #869AB8;
+    font-weight: 500;
+}
+
+/* 调整装饰图片位置和大小 */
+.position-absolute.start-0.bottom-0,
+.position-absolute.end-0.bottom-0 {
+    bottom: 80px !important;
+    max-width: 320px !important; /* 增加图片大小 */
+}
+
+/* 响应式调整 */
+@media (min-width: 768px) {
+    .display-4 {
+        font-size: 2.75rem;
+    }
+    
+    .lead {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-section {
+        padding: 4rem 0;  /* 移动端也相应增加，从 3rem 增加到 4rem */
+        margin-bottom: 0;
+    }
+    
+    .why-section .display-4 {
+        font-size: 2.25rem;  /* 移动端标题稍小 */
+    }
+    
+    .why-section .lead {
+        font-size: 1.1rem;   /* 移动端描述文字稍小 */
+    }
+}
+
+/* 分隔曲线样式 */
+.section-divider {
+    position: relative;
+    height: 48px;
+    background-color: #fff; /* 上半部分保持白色背景 */
+    margin-bottom: -1px;
+}
+
+.section-divider svg {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 2880px;
+    height: 48px;
+    transform: translateX(-50%);
+    min-width: 2880px;
+    color: #1b2a4e; /* 曲线颜色与footer背景色匹配 */
+}
+
+.fs-lg {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.text-gray-700 {
+    color: #6c757d;
+}
+
+/* 响应式图片处理 */
+@media (max-width: 768px) {
+    .d-none.d-md-block {
+        display: none !important;
+    }
+}
+
+/* 确保图片不会影响文字内容 */
+.position-relative {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 非首页内容区域的间距 */
+body:not(.index-page) section {
+    padding-top: 3rem;      /* 增加顶部内边距 */
+    padding-bottom: 3rem;   /* 增加底部内边距 */
+}
+
+/* 非首页 section 与 footer 的间距 */
+body:not(.index-page) section:last-of-type {
+    margin-bottom: 3rem;    /* 增加与 footer 的间距 */
 }

@@ -1,5 +1,39 @@
 # 开发日志
 
+## 2024-03-21 样式微调与规范更新
+### 改动内容
+- 优化：调整 Why section 文字大小和响应式显示
+- 文档：更新工作指南，完善开发日志规范
+- 规范：明确细节性调整的日志记录标准
+
+### 文件变更
+- 修改文件：
+  - assets/css/common.css（调整文字大小）
+  - docs/WORK_GUIDE.md（更新日志规范）
+  - docs/DEV_LOG.md（更新日志）
+
+### 提交信息
+分支：fix/text-size-adjustment
+描述：优化文字显示并更新开发规范
+
+## 2024-03-21 样式优化
+### 改动内容
+- 优化：移除 transactions.php 中不存在的 CSS 引用
+- 优化：统一使用 common.css 管理样式
+- 优化：统一页面布局结构
+- 文档：更新开发文档和日志
+
+### 文件变更
+- 修改文件：
+  - transactions.php（移除冗余CSS引用）
+  - assets/css/common.css（优化容器样式）
+  - docs/DEV_LOG.md（更新日志）
+  - README.md（更新文档）
+
+### 提交信息
+分支：fix/style-optimization
+描述：优化页面样式，统一使用common.css
+
 ## 2024-03-21 代码重构
 ### 改动内容
 - 重构：将单页面应用转换为多页面应用
