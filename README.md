@@ -8,8 +8,8 @@
 /
 ├── README.md          # 项目说明文档
 ├── index.php          # 首页
-├── transactions.php   # 流水记录页面
 ├── admin.php          # 后台管理页面
+├── dashboard.php      # 仪表盘页面
 ├── adminmysql.php     # 数据库管理工具
 ├── api.php            # API接口
 ├── config.php         # 配置文件
@@ -21,14 +21,23 @@
 │   ├── header.html   # 页头模板
 │   └── footer.html   # 页脚模板
 ├── uploads/           # 上传文件目录
+│   └── *.{jpg,png}   # 上传的图片文件
 └── assets/           # 静态资源
     ├── css/          # 样式文件
     │   ├── bootstrap.min.css
+    │   ├── bootstrap-icons.css
     │   └── common.css
     ├── js/           # 脚本文件
     │   ├── bootstrap.bundle.min.js
+    │   ├── echarts.min.js
     │   └── common.js
+    ├── fonts/        # 字体文件
+    │   ├── bootstrap-icons.woff
+    │   └── bootstrap-icons.woff2
     └── images/       # 图片资源
+        ├── logo.webp
+        ├── why-left.png
+        └── why-right.png
 ```
 
 ## 技术架构
