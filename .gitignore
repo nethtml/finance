@@ -3,3 +3,25 @@ vendor/
 .env
 *.log
 *.temp
+
+# Database
+*.sql
+!database/structure.sql
+database/backups/
+# 创建或编辑 .gitignore
+echo "# 忽略上传的图片文件
+uploads/*
+!uploads/.gitkeep
+
+# 忽略项目配置文件
+config.php
+
+# 忽略临时文件
+*.temp
+*.tmp
+*.log
+
+# 忽略数据库备份文件
+database/*.sql
+!database/structure.sql
+!database/*_backup.sql" > .gitignore

@@ -13,6 +13,9 @@
 ├── adminmysql.php     # 数据库管理工具
 ├── api.php            # API接口
 ├── config.php         # 配置文件
+├── database/          # 数据库文件
+│   ├── structure.sql  # 数据库结构文件
+│   └── *_backup.sql  # 数据库备份文件
 ├── docs/              # 文档目录
 │   ├── DEV_LOG.md    # 开发日志
 │   └── WORK_GUIDE.md # 工作指南
@@ -64,9 +67,21 @@
 
 ## 安装说明
 1. 配置PHPStudy环境
+   - PHP 7.4+
+   - MySQL 5.7+
+   - Apache/Nginx
+
 2. 导入数据库
+   - 使用 database/structure.sql 导入基础结构
+   - 或使用 database/*_backup.sql 导入完整数据备份
+
 3. 配置config.php
+   - 复制 config.sample.php 为 config.php
+   - 修改数据库连接信息
+
 4. 设置uploads目录权限
+   - 确保 uploads/ 目录可写
+   - 建议权限设置为 755
 
 ## 开发文档
 详细的开发文档请参见：
