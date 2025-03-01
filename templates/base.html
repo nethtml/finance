@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?> - 财务管理系统</title>
-    <!-- Bootstrap CSS -->
+    <!-- 统一引入CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="assets/css/bootstrap-icons.css" rel="stylesheet">
-    <!-- 自定义样式 -->
     <link href="assets/css/common.css" rel="stylesheet">
     <?php if (isset($extraCss)) echo $extraCss; ?>
 </head>
-<body class="bg-light <?php echo basename($_SERVER['PHP_SELF'], '.php'); ?>-page">
-    <!-- 导航栏 -->
+<body class="<?php echo basename($_SERVER['PHP_SELF'], '.php'); ?>-page">
+    <!-- 统一的头部 -->
     <?php include 'templates/header.html'; ?>
 
     <!-- 主要内容区域 -->
-    <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
-        <?php echo $mainContent; ?>
-        <?php if (isset($extraContent)) echo $extraContent; ?>
-    <?php else: ?>
-        <section>
-            <div class="container">
-                <?php echo $mainContent; ?>
-            </div>
-        </section>
-    <?php endif; ?>
+    <main>
+        <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
+            <?php echo $mainContent; ?>
+        <?php else: ?>
+            <section class="content-section">
+                <div class="container">
+                    <?php echo $mainContent; ?>
+                </div>
+            </section>
+        <?php endif; ?>
+    </main>
 
-    <!-- 页脚 -->
+    <!-- 统一的页脚 -->
     <?php include 'templates/footer.html'; ?>
 
-    <!-- JavaScript 文件 -->
+    <!-- 统一引入JS -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/common.js"></script>
     <?php if (isset($extraJs)) echo $extraJs; ?>
