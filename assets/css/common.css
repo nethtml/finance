@@ -494,11 +494,100 @@ body {
 
 /* 非首页内容区域的间距 */
 body:not(.index-page) section {
-    padding-top: 3rem;      /* 增加顶部内边距 */
-    padding-bottom: 3rem;   /* 增加底部内边距 */
+    padding-top: 2rem;
+    padding-bottom: 3rem;  /* 增加底部内边距 */
 }
 
 /* 非首页 section 与 footer 的间距 */
 body:not(.index-page) section:last-of-type {
-    margin-bottom: 3rem;    /* 增加与 footer 的间距 */
+    margin-bottom: 3rem;  /* 增加与 footer 的间距 */
+}
+
+/* 仪表盘和后台管理页面的内容间距 */
+.dashboard-page .card,
+.admin-page .card {
+    margin-bottom: 2rem;  /* 卡片之间的间距 */
+}
+
+/* 首页欢迎区域优化 */
+.welcome-section {
+    margin-top: -60px;  /* 从-20px改为-60px，向上移动40px */
+    min-height: calc(100vh - 75px);
+    display: flex;
+    align-items: center;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .welcome-section {
+        margin-top: -60px;  /* 确保移动端也保持一致的间距 */
+        min-height: calc(100vh - 75px);
+    }
+    
+    .welcome-section .lead {
+        font-size: 1rem;
+    }
+}
+
+/* 页面基础布局 */
+.content-section {
+    padding: 3rem 0;
+}
+
+/* 非首页内容区域 */
+body:not(.index-page) .content-section {
+    min-height: calc(100vh - 75px - 200px); /* 减去header和footer高度 */
+}
+
+/* 统计卡片基础样式 */
+.card.stat-card {
+    border: none;
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 统计卡片悬停效果 */
+.card.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 收入卡片 */
+.card.stat-card.income {
+    background-color: #e8f5e9 !important;
+    border-left: 4px solid #28a745;
+}
+
+/* 支出卡片 */
+.card.stat-card.expense {
+    background-color: #ffebee !important;
+    border-left: 4px solid #dc3545;
+}
+
+/* 结余卡片 */
+.card.stat-card.balance {
+    background-color: #e3f2fd !important;
+    border-left: 4px solid #0d6efd;
+}
+
+/* 统计数字样式 */
+.stat-card .stat-number {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+/* 图标样式 */
+.stat-card .bi {
+    font-size: 1.25rem;
+}
+
+/* 卡片标题样式 */
+.stat-card .card-title {
+    color: #495057;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }

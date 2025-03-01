@@ -55,43 +55,42 @@ $mainContent = '
 <!-- 仪表盘内容 -->
 <div id="chartsSection">
     <!-- 统计卡片 -->
-    <div class="row g-4 mb-4">
+    <div class="row">
+        <!-- 总收入卡片 -->
         <div class="col-md-4">
-            <div class="card h-100">
+            <div class="card stat-card income">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="stats-icon bg-primary">
-                            <i class="bi bi-wallet"></i>
-                        </div>
-                        <h6 class="mb-0 ms-3">总收入</h6>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-wallet2 me-2"></i>
+                        <h6 class="card-title mb-0">总收入</h6>
                     </div>
-                    <h4 class="mb-0" id="totalIncome">计算中...</h4>
+                    <div class="stat-number" id="totalIncome">计算中...</div>
                 </div>
             </div>
         </div>
+
+        <!-- 总支出卡片 -->
         <div class="col-md-4">
-            <div class="card h-100">
+            <div class="card stat-card expense">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="stats-icon bg-danger">
-                            <i class="bi bi-cash"></i>
-                        </div>
-                        <h6 class="mb-0 ms-3">总支出</h6>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-credit-card me-2"></i>
+                        <h6 class="card-title mb-0">总支出</h6>
                     </div>
-                    <h4 class="mb-0" id="totalExpense">计算中...</h4>
+                    <div class="stat-number" id="totalExpense">计算中...</div>
                 </div>
             </div>
         </div>
+
+        <!-- 当前结余卡片 -->
         <div class="col-md-4">
-            <div class="card h-100">
+            <div class="card stat-card balance">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="stats-icon bg-primary">
-                            <i class="bi bi-wallet"></i>
-                        </div>
-                        <h6 class="mb-0 ms-3">当前结余</h6>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-piggy-bank me-2"></i>
+                        <h6 class="card-title mb-0">当前结余</h6>
                     </div>
-                    <h4 class="mb-0" id="totalBalance">计算中...</h4>
+                    <div class="stat-number" id="totalBalance">计算中...</div>
                 </div>
             </div>
         </div>
