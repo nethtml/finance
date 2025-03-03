@@ -1,0 +1,39 @@
+# IDE and editor files
+.vscode/
+.idea/
+*.code-workspace
+
+# PHP files
+/vendor/
+composer.lock
+
+# Environment files
+.env
+*.env
+
+# Uploads directory content (but keep the directory)
+/uploads/*
+!/uploads/.gitkeep
+
+# Cache and logs
+*.log
+*.cache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test files
+test_*.php
+check_*.php
+check_*.bat
+enable_*.bat
+init_*.bat
+test_*.md
+adminmysql.php
+info.php 

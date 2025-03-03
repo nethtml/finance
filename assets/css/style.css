@@ -1,0 +1,183 @@
+/* 自定义样式 */
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.875rem;
+}
+
+/* 卡片样式优化 */
+.card {
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* 按钮样式优化 */
+.btn-outline-primary {
+    padding: 0.25rem 0.5rem;
+}
+
+/* 图片预览样式 */
+.preview-image-container {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease-in-out;
+}
+
+.preview-image:hover {
+    transform: scale(1.05);
+}
+
+/* 图片预览模态框样式 */
+.modal-body.text-center {
+    padding: 0;
+    background-color: #000;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.modal-body.text-center img {
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+/* 附件按钮样式 */
+.btn-attachment {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.btn-attachment i {
+    margin-right: 0.25rem;
+}
+
+/* 表格样式优化 */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 500;
+    background-color: #f8f9fa;
+    border-bottom-width: 1px;
+}
+
+.table td {
+    padding: 0.75rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .table-responsive {
+        margin-bottom: 1rem;
+    }
+    
+    .badge {
+        display: inline-block;
+        margin-bottom: 0.25rem;
+    }
+
+    .btn-attachment {
+        max-width: 150px;
+    }
+
+    .preview-image-container {
+        height: 120px;
+    }
+
+    .preview-image {
+        max-height: 120px;
+    }
+}
+
+/* 图表容器样式 */
+#monthlyTrend, #typeDistribution {
+    min-height: 400px;
+    width: 100%;
+}
+
+/* Bootstrap Icons 字体配置 */
+@font-face {
+  font-display: block;
+  font-family: "bootstrap-icons";
+  src: url("fonts/bootstrap-icons.woff2") format("woff2"),
+       url("fonts/bootstrap-icons.woff") format("woff");
+}
+
+/* 通用样式 */
+.bi {
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.125em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 卡片样式 */
+.card {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* 按钮样式 */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* 徽章样式 */
+.badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .table {
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    font-size: 0.8rem;
+  }
+} 
