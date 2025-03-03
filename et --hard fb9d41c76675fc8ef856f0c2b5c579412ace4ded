@@ -1,0 +1,125 @@
+[33mcommit 9a90797cf375e852bdb0f1d7e03d6389c1dc89c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Tue Mar 4 01:50:33 2025 +0800
+
+    Clean all files
+
+[33mcommit fb9d41c76675fc8ef856f0c2b5c579412ace4ded[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 22:14:07 2025 +0800
+
+    docs: 删除旧的开发日志文件，改用新的dev_log.md
+
+[33mcommit 3c328820412f7de880b2a8f378fa25ed34ef381d[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 22:12:06 2025 +0800
+
+    docs: 创建新的开发日志文件，整理核心开发计划
+
+[33mcommit 0e630f00184fe609a81d9de6970d36cbcc6d21b5[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 22:05:29 2025 +0800
+
+    docs: 修复开发日志文件格式问题
+
+[33mcommit b2c3064c3cecd4754f4b56dcf2dd953021797e69[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 22:02:52 2025 +0800
+
+    docs: 更新开发日志和README，添加新的优化项目
+
+[33mcommit d1a5e991c3b6217d060125a4ea2ea54de0f6d416[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 21:52:43 2025 +0800
+
+    docs: 更新开发日志，添加环境变更和待优化功能清单
+
+[33mcommit d792eee5a2a578cc87e76749f600c11de13976dd[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 21:48:35 2025 +0800
+
+    docs: 更新PHP版本信息和待优化功能清单
+
+[33mcommit afcc72e0ea93b6f4cded0a95ae8f5759eab2b167[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 21:47:17 2025 +0800
+
+    docs: 更新PHP版本信息和待优化功能清单
+
+[33mcommit e6c09668229c50c65e3959f7f99d9c8eb87715e9[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 20:02:02 2025 +0800
+
+    修改了readme.md文件
+
+[33mcommit 5b9d13d8ba94513f92a53f4758c9b064c347b29b[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 19:59:09 2025 +0800
+
+    更新 README.md 文件，完善项目说明
+
+[33mcommit 935b84981e7bda03fc137ef37e03672ac6c37f11[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 19:07:20 2025 +0800
+
+    Initial commit: Personal Finance Management System
+
+[33mcommit d8cfba5d487d06283ff01586efa83a0bf01a2c05[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 14:59:53 2025 +0800
+
+    feat: 完成基础功能开发和文件结构设置 - 添加 Bootstrap 和 ECharts 前端依赖 - 创建基础目录结构 - 添加 .gitignore 配置 - 更新开发文档和说明文件 - 添加数据库重建脚本
+
+[33mcommit 9f955cd235f2ee974f0718ba37acb0cdf04d4212[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 13:23:40 2025 +0800
+
+    feat: 实现分类功能，添加分类表和动态选择
+
+[33mcommit c2de79cb94522282a22183f7aadfcdb48ca56b13[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 13:20:43 2025 +0800
+
+    docs: 更新开发日志，记录界面优化和前端资源完善
+
+[33mcommit af8731de0e2a9d7f277c9ef3f0cd94b136a08ec9[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 13:19:43 2025 +0800
+
+    feat: 添加样式和交互脚本，优化表格显示和文件操作
+
+[33mcommit e0a2bb8e283f7c9ce6a62897ad653ec72c3b135b[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 12:48:19 2025 +0800
+
+    docs: 更新README和开发日志，添加分类功能相关说明
+
+[33mcommit 2b681efd19642f7731e9b7404d67967e4bb04762[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 12:29:22 2025 +0800
+
+    feat: 初始化项目文件
+
+[33mcommit 05a82521d7aa35b7998fbe3156d022e27d2f6400[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 10:40:14 2025 +0800
+
+    feat: 添加流水列表页面
+
+[33mcommit 02849dbc266085f976eaac64bc7a7686cecd6ec3[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 10:35:59 2025 +0800
+
+    feat: 更新技术栈版本并使用CDN
+
+[33mcommit 752b6734755328686735da52f75a4ee73df45f53[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 10:21:57 2025 +0800
+
+    feat: 初始化项目结构和基础文件
+
+[33mcommit aae74974fe62e16abd46c1c99917cde08d36d2ed[m
+Author: GreenLand <lizhenweig@gmail.com>
+Date:   Mon Mar 3 09:55:15 2025 +0800
+
+    Initial commit: empty repository
