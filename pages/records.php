@@ -266,6 +266,24 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCategories(typeSelect.value);
     }
 });
+
+// 添加隐藏事件监听器
+document.addEventListener('hidden.bs.modal', function() {
+    // 恢复之前的焦点
+    const elementToFocus = this._lastFocus;
+    
+    // 清理全局变量
+    this._lastFocus = null;
+    
+    // 安全地恢复焦点
+    if (elementToFocus && document.body.contains(elementToFocus)) {
+        try {
+            setTimeout(() => elementToFocus.focus(), 0);
+        } catch (e) {
+            console.warn('Failed to restore focus:', e);
+        }
+    }
+});
 </script>
 
 <?php require_once '../includes/footer.php'; ?> 

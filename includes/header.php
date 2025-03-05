@@ -14,6 +14,9 @@ require_once __DIR__ . '/path_helper.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>财务管理系统</title>
+    <!-- 添加网站图标 -->
+    <link rel="icon" type="image/x-icon" href="<?php echo $isSubPage ? '../' : ''; ?>favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo $isSubPage ? '../' : ''; ?>favicon.ico">
     <!-- Bootstrap CSS -->
     <link href="<?php echo getAssetPath('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <!-- Bootstrap Icons -->

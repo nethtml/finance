@@ -60,6 +60,9 @@ function uploadFile($file) {
     $mimeType = mime_content_type($file['tmp_name']);
     $fileExt = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     
+    // 定义视频文件扩展名
+    $videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv', 'webm', '3gp', 'm4v'];
+    
     // 确定文件类型和目标目录
     $targetDir = 'misc';
     if (strpos($mimeType, 'image/') === 0) {
@@ -70,7 +73,7 @@ function uploadFile($file) {
         $targetDir = 'documents';
     } elseif (strpos($mimeType, 'audio/') === 0) {
         $targetDir = 'music';
-    } elseif (strpos($mimeType, 'video/') === 0) {
+    } elseif (strpos($mimeType, 'video/') === 0 || in_array($fileExt, $videoExtensions)) {
         $targetDir = 'videos';
     }
     
