@@ -264,4 +264,3 @@ function uploadFile($file, $type) {
 本项目通过 PHP + MySQL + Nginx + Bootstrap + ECharts 技术栈实现了一个简单的财务管理网站。新增的凭证附件功能增强了实用性，项目结构清晰，功能模块化，适合初学者学习和实践。未来可以扩展更多功能，如用户权限管理、数据导出等。
 
 ---
-# 测试 SourceTree 提交
