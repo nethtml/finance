@@ -235,7 +235,7 @@ if (!function_exists('formatAmount')) {
 <div class="modal" id="imagePreviewModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document" style="opacity: 0;">
         <div class="modal-content">
-            <div class="modal-header py-2 draggable">
+            <div class="modal-header py-2 draggable d-none d-sm-flex">
                 <h5 class="modal-title">图片预览</h5>
                 <div class="modal-buttons ms-auto">
                     <button type="button" class="btn btn-sm btn-outline-secondary me-2 maximize-btn" aria-label="最大化">
@@ -244,8 +244,10 @@ if (!function_exists('formatAmount')) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
             </div>
-            <div class="modal-body p-0 text-center" style="background: #f8f9fa;">
-                <img src="" id="previewImage" alt="预览图片" style="max-width: 100%; max-height: calc(100vh - 120px); object-fit: contain;">
+            <!-- 移动端关闭按钮 -->
+            <button type="button" class="btn-close position-fixed top-0 end-0 m-3 d-sm-none" data-bs-dismiss="modal" aria-label="关闭" style="z-index: 1051;"></button>
+            <div class="modal-body p-0 text-center" style="background: #fff;">
+                <img src="" id="previewImage" alt="预览图片" style="max-width: 100%; max-height: 100vh; object-fit: contain;">
             </div>
         </div>
     </div>
@@ -273,9 +275,9 @@ if (!function_exists('formatAmount')) {
 
 <!-- 音频播放模态框 -->
 <div class="modal" id="audioPreviewModal" tabindex="-1" role="dialog" aria-modal="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 400px;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header py-2 draggable">
+            <div class="modal-header py-2 draggable d-none d-sm-flex">
                 <h5 class="modal-title">音频播放</h5>
                 <div class="modal-buttons ms-auto">
                     <button type="button" class="btn btn-sm btn-outline-secondary me-2 maximize-btn" aria-label="最大化">
@@ -284,6 +286,8 @@ if (!function_exists('formatAmount')) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
             </div>
+            <!-- 移动端关闭按钮 -->
+            <button type="button" class="btn-close position-fixed top-0 end-0 m-3 d-sm-none" data-bs-dismiss="modal" aria-label="关闭" style="z-index: 1051;"></button>
             <div class="modal-body text-center">
                 <h6 id="audioTitle" class="mb-3"></h6>
                 <audio id="audioPlayer" controls class="w-100">
@@ -298,7 +302,7 @@ if (!function_exists('formatAmount')) {
 <div class="modal fade" id="videoPreviewModal" tabindex="-1" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header py-2">
+            <div class="modal-header py-2 d-none d-sm-flex">
                 <h5 class="modal-title">视频播放</h5>
                 <div class="modal-buttons ms-auto">
                     <button type="button" class="btn btn-sm btn-outline-secondary me-2 maximize-btn" aria-label="最大化">
@@ -307,14 +311,16 @@ if (!function_exists('formatAmount')) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
             </div>
+            <!-- 移动端关闭按钮 -->
+            <button type="button" class="btn-close btn-close-white position-fixed top-0 end-0 m-3 d-sm-none" data-bs-dismiss="modal" aria-label="关闭" style="z-index: 1051;"></button>
             <div class="modal-body p-0 bg-dark">
                 <div class="video-container position-relative">
-                    <video id="videoPlayer" controls playsinline webkit-playsinline>
+                    <video id="videoPlayer" controls playsinline webkit-playsinline style="width: 100%; height: 100%; object-fit: contain;">
                         您的浏览器不支持视频播放。
                     </video>
-                    <!-- PC端播放按钮遮罩层 -->
+                    <!-- 播放按钮遮罩层 -->
                     <div id="videoPlayOverlay" class="play-button-overlay d-flex align-items-center justify-content-center" 
-                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); cursor: pointer;">
+                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); cursor: pointer;">
                         <button class="btn btn-light rounded-circle p-3" style="width: 80px; height: 80px;">
                             <i class="bi bi-play-fill fs-1"></i>
                         </button>
@@ -451,9 +457,9 @@ if (!function_exists('formatAmount')) {
         padding: 0.75rem;
     }
 }
-/* 修复编辑模态框的背景和定位问题 */
+/* 修改模态框背景色 */
 .modal.fade.show {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
 .modal.fade .modal-dialog.edit-modal {
     transform: translate(0, 0);
@@ -499,6 +505,7 @@ if (!function_exists('formatAmount')) {
 .modal-content {
     max-height: calc(100vh - 20px);
     overflow: hidden;
+    background: transparent;
 }
 .modal-body {
     overflow: auto;
@@ -612,157 +619,6 @@ if (!function_exists('formatAmount')) {
     }
 }
 
-/* 视频播放器样式 */
-.video-container {
-    background-color: #000;
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-#videoPlayer, #mobileVideoPlayer {
-    width: 100%;
-    height: auto;
-    max-height: calc(90vh - 60px);
-    background-color: #000;
-    object-fit: contain;
-}
-
-.play-button-overlay {
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.play-button-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* 视频控制栏样式 */
-video::-webkit-media-controls-panel {
-    display: flex !important;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-video:hover::-webkit-media-controls-panel {
-    opacity: 1;
-}
-
-/* 确保模态框在移动端也能正常工作 */
-@media (max-width: 575.98px) {
-    /* 移动端列间距调整 */
-    .table td:nth-child(1),
-    .table td:nth-child(2),
-    .table td:nth-child(3) {
-        padding: 0.5rem 0.25rem !important;
-    }
-    
-    .modal-dialog {
-        margin: 0;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 100%;
-    }
-    .modal-content {
-        height: 100%;
-        border: 0;
-        border-radius: 0;
-    }
-    .video-container {
-        height: calc(100vh - 56px);
-    }
-    #videoPlayer {
-        max-height: calc(100vh - 56px);
-    }
-    
-    /* 移动端按钮样式 */
-    .btn.d-flex {
-        width: 46px !important;
-        min-width: 46px !important;
-        max-width: 46px !important;
-        height: 46px !important;
-        padding: 0 !important;
-        margin: 0 auto;
-    }
-    
-    /* 确保移动端按钮为正方形 */
-    .btn.d-flex .d-sm-none {
-        width: 100%;
-        height: 100%;
-        display: flex !important;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 2px;
-    }
-    
-    /* 移动端图标和文字间距 */
-    .btn.d-flex .d-sm-none i {
-        margin-bottom: 2px;
-        font-size: 20px;
-        line-height: 1;
-    }
-    
-    .btn.d-flex .d-sm-none span {
-        font-size: 12px;
-        line-height: 1.2;
-        margin-top: 1px;
-    }
-
-    /* 操作列按钮样式 */
-    .table td:last-child {
-        padding: 0 !important;
-        height: 46px !important;
-        white-space: normal !important;
-        width: 60px !important;
-    }
-
-    .table td:last-child .btn {
-        width: 60px !important;
-        min-width: 60px !important;
-        max-width: 60px !important;
-        height: 23px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    .table td:last-child .btn:first-child {
-        margin-bottom: 2px !important;
-    }
-
-    .table td:last-child .btn .d-sm-none {
-        flex-direction: row !important;
-        height: 100% !important;
-        gap: 3px !important;
-        justify-content: center !important;
-    }
-
-    .table td:last-child .btn .d-sm-none i {
-        margin: 0 !important;
-        font-size: 14px !important;
-    }
-
-    .table td:last-child .btn .d-sm-none span {
-        font-size: 11px !important;
-        margin: 0 !important;
-    }
-    
-    /* 优化类型标签的显示 */
-    .d-flex.flex-wrap {
-        gap: 0.25rem !important;
-    }
-    
-    /* 确保说明文字在移动端正确换行 */
-    .text-break {
-        word-break: break-word !important;
-        min-width: 150px;
-    }
-}
-
 /* PC端按钮样式 */
 @media (min-width: 576px) {
     .btn.d-flex {
@@ -801,6 +657,269 @@ video:hover::-webkit-media-controls-panel {
 
     .table td:last-child .btn {
         margin: 0 2px !important;
+    }
+
+    /* PC端视频模态框样式 */
+    #videoPreviewModal .modal-dialog {
+        max-width: 90vw;
+        margin: 1.75rem auto;
+    }
+    
+    #videoPreviewModal .modal-content {
+        background: transparent;
+        height: auto;
+        max-height: calc(100vh - 3.5rem);
+    }
+    
+    #videoPreviewModal .modal-header {
+        background: #fff;
+    }
+    
+    #videoPreviewModal .video-container {
+        height: calc(100vh - 120px);
+        max-height: calc(100vh - 120px);
+        overflow: hidden;
+        background: transparent;
+    }
+    
+    #videoPreviewModal .modal-body {
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+    }
+}
+
+/* 移动端按钮样式 */
+@media (max-width: 575.98px) {
+    /* 移动端按钮基础样式 */
+    .btn.d-flex {
+        width: 46px !important;
+        min-width: 46px !important;
+        max-width: 46px !important;
+        height: 46px !important;
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+    
+    /* 确保移动端按钮为正方形 */
+    .btn.d-flex .d-sm-none {
+        width: 100%;
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+    }
+    
+    /* 移动端图标和文字间距 */
+    .btn.d-flex .d-sm-none i {
+        margin-bottom: 2px;
+        font-size: 20px;
+        line-height: 1;
+    }
+    
+    .btn.d-flex .d-sm-none span {
+        font-size: 12px;
+        line-height: 1.2;
+        margin-top: 1px;
+    }
+    
+    /* 操作列按钮样式 */
+    .table td:last-child {
+        padding: 0 !important;
+        height: 46px !important;
+        white-space: normal !important;
+        width: 60px !important;
+    }
+
+    .table td:last-child .btn {
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+        height: 23px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .table td:last-child .btn:first-child {
+        margin-bottom: 2px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none {
+        flex-direction: row !important;
+        height: 100% !important;
+        gap: 3px !important;
+        justify-content: center !important;
+    }
+
+    .table td:last-child .btn .d-sm-none i {
+        margin: 0 !important;
+        font-size: 14px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none span {
+        font-size: 11px !important;
+        margin: 0 !important;
+    }
+}
+
+/* 视频播放器样式 */
+.video-container {
+    background-color: transparent;
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#videoPlayer, #mobileVideoPlayer {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+}
+
+.play-button-overlay {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.play-button-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 视频控制栏样式 */
+video::-webkit-media-controls-panel {
+    display: flex !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+video:hover::-webkit-media-controls-panel {
+    opacity: 1;
+}
+
+/* 确保模态框在移动端也能正常工作 */
+@media (max-width: 575.98px) {
+    .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+    }
+    
+    .modal-body {
+        padding: 0 !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        overflow: hidden !important;
+    }
+    
+    .video-container {
+        width: 100vw !important;
+        height: 100vh !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    #videoPlayer, #mobileVideoPlayer {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+}
+
+/* PC端视频模态框样式 */
+@media (min-width: 576px) {
+    #videoPreviewModal .modal-dialog {
+        max-width: 90vw;
+        margin: 1.75rem auto;
+    }
+    
+    #videoPreviewModal .modal-content {
+        background: transparent;
+        height: auto;
+        max-height: calc(100vh - 3.5rem);
+    }
+    
+    #videoPreviewModal .modal-header {
+        background: #fff;
+    }
+    
+    #videoPreviewModal .video-container {
+        height: calc(100vh - 120px);
+        max-height: calc(100vh - 120px);
+        overflow: hidden;
+        background: transparent;
+    }
+    
+    #videoPreviewModal .modal-body {
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+    }
+}
+
+/* 图片预览模态框样式 */
+#imagePreviewModal .modal-header {
+    background: #fff !important;
+}
+
+/* 移动端图片预览样式 */
+@media (max-width: 575.98px) {
+    #imagePreviewModal .modal-dialog {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    #imagePreviewModal .modal-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+    }
+    
+    #imagePreviewModal .modal-body {
+        padding: 0 !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #fff !important;
+    }
+    
+    #imagePreviewModal #previewImage {
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
 }
 </style>
