@@ -556,28 +556,58 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (modal.classList.contains('maximized')) {
                 // 还原模态框
-                modal.classList.remove('maximized');
-                icon.classList.remove('bi-fullscreen-exit');
-                icon.classList.add('bi-fullscreen');
-                this.setAttribute('aria-label', '最大化');
+                restoreModal(modal, icon, this);
             } else {
                 // 最大化模态框
-                modal.classList.add('maximized');
-                icon.classList.remove('bi-fullscreen');
-                icon.classList.add('bi-fullscreen-exit');
-                this.setAttribute('aria-label', '还原');
+                maximizeModal(modal, icon, this);
             }
         });
     });
     
-    // 监听窗口大小变化，调整最大化状态下的模态框尺寸
+    // 监听所有模态框的隐藏事件
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('hide.bs.modal', function() {
+            // 如果模态框是最大化状态，先还原
+            if (this.classList.contains('maximized')) {
+                const maximizeBtn = this.querySelector('.maximize-btn');
+                const icon = maximizeBtn?.querySelector('.bi');
+                if (maximizeBtn) {
+                    restoreModal(this, icon, maximizeBtn);
+                }
+            }
+            
+            // 确保移除所有可能影响页面交互的样式
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            
+            // 移除所有遮罩层
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                backdrop.remove();
+            });
+        });
+
+        modal.addEventListener('hidden.bs.modal', function() {
+            // 再次确保清理所有状态
+            this.style.display = 'none';
+            this.setAttribute('aria-hidden', 'true');
+            this.removeAttribute('aria-modal');
+            this.removeAttribute('role');
+            
+            // 确保页面可以滚动
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        });
+    });
+    
+    // 监听窗口大小变化
     window.addEventListener('resize', function() {
         const maximizedModals = document.querySelectorAll('.modal.maximized');
         maximizedModals.forEach(modal => {
             if (modal.classList.contains('maximized')) {
                 const modalBody = modal.querySelector('.modal-body');
                 if (modalBody) {
-                    const headerHeight = modal.querySelector('.modal-header').offsetHeight;
+                    const headerHeight = modal.querySelector('.modal-header')?.offsetHeight || 0;
                     modalBody.style.height = `calc(100vh - ${headerHeight}px)`;
                 }
             }
@@ -1084,5 +1114,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // 辅助函数：最大化模态框
+    function maximizeModal(modal, icon, button) {
+        modal.classList.add('maximized');
+        if (icon) {
+            icon.classList.remove('bi-fullscreen');
+            icon.classList.add('bi-fullscreen-exit');
+        }
+        if (button) {
+            button.setAttribute('aria-label', '还原');
+        }
+    }
+    
+    // 辅助函数：还原模态框
+    function restoreModal(modal, icon, button) {
+        modal.classList.remove('maximized');
+        if (icon) {
+            icon.classList.remove('bi-fullscreen-exit');
+            icon.classList.add('bi-fullscreen');
+        }
+        if (button) {
+            button.setAttribute('aria-label', '最大化');
+        }
+    }
 });
 </script> 
