@@ -46,7 +46,29 @@ if (!function_exists('formatAmount')) {
             <?php else: ?>
                 <?php foreach ($records as $record): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($record['date']); ?></td>
+                    <td class="text-nowrap">
+                        <div class="d-none d-sm-block">
+                            <?php echo htmlspecialchars($record['date']); ?>
+                        </div>
+                        <div class="d-sm-none">
+                            <?php
+                            $recordYear = substr($record['date'], 0, 4);
+                            $currentYear = date('Y');
+                            $monthDay = substr($record['date'], 5);
+                            
+                            if ($recordYear == $currentYear) {
+                                // 当年记录只显示月日
+                                echo '<div class="text-center">' . $monthDay . '</div>';
+                            } else {
+                                // 往年记录显示年份和月日（两行）
+                                echo '<div class="d-flex flex-column align-items-center">';
+                                echo '<div>' . $recordYear . '</div>';
+                                echo '<div>' . $monthDay . '</div>';
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
+                    </td>
                     <td>
                         <span class="badge bg-<?php echo $record['type'] === '收入' ? 'success' : 'danger'; ?> me-1">
                             <?php echo htmlspecialchars($record['type']); ?>
@@ -69,32 +91,100 @@ if (!function_exists('formatAmount')) {
                             ?>
                             
                             <?php if ($isImage): ?>
-                                <button type="button" class="btn btn-sm btn-success view-image" data-image-path="<?php echo $uploadPath; ?>">
-                                    <i class="bi bi-image"></i> 查看凭证
+                                <button type="button" class="btn btn-sm btn-success view-image d-flex align-items-center" data-image-path="<?php echo $uploadPath; ?>">
+                                    <div class="d-none d-sm-flex align-items-center">
+                                        <i class="bi bi-image"></i>
+                                        <span class="ms-1">凭证</span>
+                                    </div>
+                                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                        <i class="bi bi-image"></i>
+                                        <span>凭证</span>
+                                    </div>
                                 </button>
                             <?php elseif ($isPdf): ?>
-                                <button type="button" class="btn btn-sm btn-danger view-pdf" data-pdf-path="<?php echo $uploadPath; ?>">
-                                    <i class="bi bi-file-pdf"></i> 查看PDF
+                                <button type="button" class="btn btn-sm btn-danger view-pdf d-flex align-items-center" data-pdf-path="<?php echo $uploadPath; ?>">
+                                    <div class="d-none d-sm-flex align-items-center">
+                                        <i class="bi bi-file-pdf"></i>
+                                        <span class="ms-1">PDF</span>
+                                    </div>
+                                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                        <i class="bi bi-file-pdf"></i>
+                                        <span>PDF</span>
+                                    </div>
                                 </button>
                             <?php elseif ($isAudio): ?>
-                                <button type="button" class="btn btn-sm btn-info view-audio" 
+                                <button type="button" class="btn btn-sm btn-info view-audio d-flex align-items-center" 
                                         data-audio-path="<?php echo $uploadPath; ?>"
                                         data-audio-name="<?php echo basename($filePath); ?>">
-                                    <i class="bi bi-music-note-beamed"></i> 播放音频
+                                    <div class="d-none d-sm-flex align-items-center">
+                                        <i class="bi bi-music-note-beamed"></i>
+                                        <span class="ms-1">音频</span>
+                                    </div>
+                                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                        <i class="bi bi-music-note-beamed"></i>
+                                        <span>音频</span>
+                                    </div>
                                 </button>
                             <?php elseif ($isVideo): ?>
-                                <button type="button" class="btn btn-sm btn-warning view-video" 
+                                <button type="button" class="btn btn-sm btn-warning view-video d-flex align-items-center" 
                                         data-video-path="<?php echo $uploadPath; ?>"
                                         data-video-name="<?php echo basename($filePath); ?>">
-                                    <i class="bi bi-play-circle"></i> 播放视频
+                                    <div class="d-none d-sm-flex align-items-center">
+                                        <i class="bi bi-play-circle"></i>
+                                        <span class="ms-1">视频</span>
+                                    </div>
+                                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                        <i class="bi bi-play-circle"></i>
+                                        <span>视频</span>
+                                    </div>
                                 </button>
                             <?php elseif ($isDocument): ?>
-                                <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-primary" download>
-                                    <i class="bi bi-file-earmark-text"></i> 下载文档
-                                </a>
+                                <?php
+                                $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+                                if ($ext === 'doc' || $ext === 'docx'): ?>
+                                    <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-primary d-flex align-items-center" download>
+                                        <div class="d-none d-sm-flex align-items-center">
+                                            <i class="bi bi-file-word"></i>
+                                            <span class="ms-1">Word</span>
+                                        </div>
+                                        <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                            <i class="bi bi-file-word"></i>
+                                            <span>Word</span>
+                                        </div>
+                                    </a>
+                                <?php elseif ($ext === 'xls' || $ext === 'xlsx'): ?>
+                                    <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-primary d-flex align-items-center" download>
+                                        <div class="d-none d-sm-flex align-items-center">
+                                            <i class="bi bi-file-excel"></i>
+                                            <span class="ms-1">Excel</span>
+                                        </div>
+                                        <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                            <i class="bi bi-file-excel"></i>
+                                            <span>Excel</span>
+                                        </div>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-primary d-flex align-items-center" download>
+                                        <div class="d-none d-sm-flex align-items-center">
+                                            <i class="bi bi-file-text"></i>
+                                            <span class="ms-1">文档</span>
+                                        </div>
+                                        <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                            <i class="bi bi-file-text"></i>
+                                            <span>文档</span>
+                                        </div>
+                                    </a>
+                                <?php endif; ?>
                             <?php else: ?>
-                                <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-secondary" download>
-                                    <i class="bi bi-file-earmark"></i> 下载文件
+                                <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-secondary d-flex align-items-center" download>
+                                    <div class="d-none d-sm-flex align-items-center">
+                                        <i class="bi bi-download"></i>
+                                        <span class="ms-1">下载</span>
+                                    </div>
+                                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                        <i class="bi bi-download"></i>
+                                        <span>下载</span>
+                                    </div>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -103,10 +193,24 @@ if (!function_exists('formatAmount')) {
                     <?php if ($showActions): ?>
                     <td>
                         <button type="button" class="btn btn-sm btn-primary edit-record" data-record='<?php echo json_encode($record); ?>'>
-                            编辑
+                            <div class="d-none d-sm-flex align-items-center">
+                                <i class="bi bi-pencil"></i>
+                                <span class="ms-1">编辑</span>
+                            </div>
+                            <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                <i class="bi bi-pencil"></i>
+                                <span>编辑</span>
+                            </div>
                         </button>
                         <button type="button" class="btn btn-sm btn-danger delete-record" data-id="<?php echo $record['id']; ?>">
-                            删除
+                            <div class="d-none d-sm-flex align-items-center">
+                                <i class="bi bi-trash"></i>
+                                <span class="ms-1">删除</span>
+                            </div>
+                            <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                                <i class="bi bi-trash"></i>
+                                <span>删除</span>
+                            </div>
                         </button>
                     </td>
                     <?php endif; ?>
@@ -242,13 +346,27 @@ if (!function_exists('formatAmount')) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                    <i class="bi bi-x-lg me-1"></i>取消
+                    <div class="d-none d-sm-flex align-items-center">
+                        <i class="bi bi-x-lg"></i>
+                        <span class="ms-1">取消</span>
+                    </div>
+                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                        <i class="bi bi-x-lg"></i>
+                        <span>取消</span>
+                    </div>
                 </button>
                 <form action="manage.php" method="post" class="d-inline">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
                     <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash me-1"></i>确认删除
+                        <div class="d-none d-sm-flex align-items-center">
+                            <i class="bi bi-trash"></i>
+                            <span class="ms-1">确认删除</span>
+                        </div>
+                        <div class="d-sm-none d-flex flex-column align-items-center w-100">
+                            <i class="bi bi-trash"></i>
+                            <span>删除</span>
+                        </div>
                     </button>
                 </form>
             </div>
@@ -525,7 +643,7 @@ video:hover::-webkit-media-controls-panel {
 }
 
 /* 确保模态框在移动端也能正常工作 */
-@media (max-width: 576px) {
+@media (max-width: 575.98px) {
     .modal-dialog {
         margin: 0;
         width: 100% !important;
@@ -542,6 +660,82 @@ video:hover::-webkit-media-controls-panel {
     }
     #videoPlayer {
         max-height: calc(100vh - 56px);
+    }
+    
+    /* 移动端按钮样式 */
+    .btn.d-flex {
+        width: 46px !important;
+        min-width: 46px !important;
+        max-width: 46px !important;
+        height: 46px !important;
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+    
+    /* 确保移动端按钮为正方形 */
+    .btn.d-flex .d-sm-none {
+        width: 100%;
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+    }
+    
+    /* 移动端图标和文字间距 */
+    .btn.d-flex .d-sm-none i {
+        margin-bottom: 2px;
+        font-size: 20px;
+        line-height: 1;
+    }
+    
+    .btn.d-flex .d-sm-none span {
+        font-size: 12px;
+        line-height: 1.2;
+        margin-top: 1px;
+    }
+    
+    /* 优化类型标签的显示 */
+    .d-flex.flex-wrap {
+        gap: 0.25rem !important;
+    }
+    
+    /* 确保说明文字在移动端正确换行 */
+    .text-break {
+        word-break: break-word !important;
+        min-width: 150px;
+    }
+}
+
+/* PC端按钮样式 */
+@media (min-width: 576px) {
+    .btn.d-flex {
+        height: 31px !important;
+        padding: 0 4px !important;
+        width: 77px !important;
+        min-width: 77px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    /* PC端图标和文字间距 */
+    .btn.d-flex .d-sm-flex {
+        height: 100%;
+        align-items: center;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 4px !important;
+    }
+    
+    .btn.d-flex .d-sm-flex i {
+        font-size: 16px;
+        margin: 0 !important;
+    }
+    
+    .btn.d-flex .d-sm-flex .ms-1 {
+        margin: 0 !important;
+        font-size: 14px;
     }
 }
 </style>
