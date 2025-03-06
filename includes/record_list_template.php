@@ -654,6 +654,13 @@ video:hover::-webkit-media-controls-panel {
 
 /* 确保模态框在移动端也能正常工作 */
 @media (max-width: 575.98px) {
+    /* 移动端列间距调整 */
+    .table td:nth-child(1),
+    .table td:nth-child(2),
+    .table td:nth-child(3) {
+        padding: 0.5rem 0.25rem !important;
+    }
+    
     .modal-dialog {
         margin: 0;
         width: 100% !important;
@@ -705,6 +712,44 @@ video:hover::-webkit-media-controls-panel {
         line-height: 1.2;
         margin-top: 1px;
     }
+
+    /* 操作列按钮样式 */
+    .table td:last-child {
+        padding: 0 !important;
+        height: 46px !important;
+        white-space: normal !important;
+        width: 60px !important;
+    }
+
+    .table td:last-child .btn {
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+        height: 23px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .table td:last-child .btn:first-child {
+        margin-bottom: 2px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none {
+        flex-direction: row !important;
+        height: 100% !important;
+        gap: 3px !important;
+        justify-content: center !important;
+    }
+
+    .table td:last-child .btn .d-sm-none i {
+        margin: 0 !important;
+        font-size: 14px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none span {
+        font-size: 11px !important;
+        margin: 0 !important;
+    }
     
     /* 优化类型标签的显示 */
     .d-flex.flex-wrap {
@@ -746,6 +791,16 @@ video:hover::-webkit-media-controls-panel {
     .btn.d-flex .d-sm-flex .ms-1 {
         margin: 0 !important;
         font-size: 14px;
+    }
+
+    /* PC端操作列按钮样式 */
+    .table td:last-child {
+        white-space: nowrap !important;
+        padding: 0.5rem !important;
+    }
+
+    .table td:last-child .btn {
+        margin: 0 2px !important;
     }
 }
 </style>
