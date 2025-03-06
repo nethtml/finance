@@ -70,12 +70,22 @@ if (!function_exists('formatAmount')) {
                         </div>
                     </td>
                     <td>
-                        <span class="badge bg-<?php echo $record['type'] === '收入' ? 'success' : 'danger'; ?> me-1">
-                            <?php echo htmlspecialchars($record['type']); ?>
-                        </span>
-                        <span class="badge bg-secondary">
-                            <?php echo htmlspecialchars($record['category_name']); ?>
-                        </span>
+                        <div class="d-none d-sm-flex align-items-center">
+                            <span class="badge bg-<?php echo $record['type'] === '收入' ? 'success' : 'danger'; ?> me-1">
+                                <?php echo htmlspecialchars($record['type']); ?>
+                            </span>
+                            <span class="badge bg-secondary">
+                                <?php echo htmlspecialchars($record['category_name']); ?>
+                            </span>
+                        </div>
+                        <div class="d-sm-none d-flex flex-column align-items-center">
+                            <span class="badge bg-<?php echo $record['type'] === '收入' ? 'success' : 'danger'; ?> mb-1">
+                                <?php echo htmlspecialchars($record['type']); ?>
+                            </span>
+                            <span class="badge bg-secondary">
+                                <?php echo htmlspecialchars($record['category_name']); ?>
+                            </span>
+                        </div>
                     </td>
                     <td>￥<?php echo formatAmount($record['amount']); ?></td>
                     <td>
@@ -162,8 +172,8 @@ if (!function_exists('formatAmount')) {
                                             <i class="bi bi-file-excel"></i>
                                             <span>Excel</span>
                                         </div>
-                                    </a>
-                                <?php else: ?>
+                                </a>
+                            <?php else: ?>
                                     <a href="<?php echo $uploadPath; ?>" class="btn btn-sm btn-primary d-flex align-items-center" download>
                                         <div class="d-none d-sm-flex align-items-center">
                                             <i class="bi bi-file-text"></i>
