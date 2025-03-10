@@ -99,54 +99,63 @@ require_once '../includes/header.php';
 
 <!-- 搜索表单 -->
 <div class="card mb-4">
-    <div class="card-header d-flex align-items-center">
-        <i class="bi bi-funnel me-2"></i>
-        <h5 class="card-title mb-0 fw-bold">筛选记录</h5>
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-funnel me-2"></i>
+            <h5 class="card-title mb-0 fw-bold">筛选记录</h5>
+        </div>
+        <!-- 移动端筛选按钮 -->
+        <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterFormCollapse" aria-expanded="false" aria-controls="filterFormCollapse">
+            <i class="bi bi-funnel"></i> 筛选
+        </button>
     </div>
     <div class="card-body">
-        <form method="get" action="records.php" class="row g-3">
-            <div class="col-md-2">
-                <label class="form-label">开始日期</label>
-                <input type="date" class="form-control" name="startDate" 
-                       value="<?php echo $search['startDate']; ?>">
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">结束日期</label>
-                <input type="date" class="form-control" name="endDate" 
-                       value="<?php echo $search['endDate']; ?>">
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">类型</label>
-                <select class="form-select" name="type" id="type" onchange="updateCategories(this.value)">
-                    <option value="">全部</option>
-                    <option value="收入" <?php echo $search['type'] === '收入' ? 'selected' : ''; ?>>收入</option>
-                    <option value="支出" <?php echo $search['type'] === '支出' ? 'selected' : ''; ?>>支出</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">分类</label>
-                <select class="form-select" name="category_id" id="category">
-                    <option value="">全部</option>
-                    <?php if (!empty($search['type'])): ?>
-                    <?php foreach (getCategories($pdo, $search['type']) as $category): ?>
-                        <option value="<?php echo $category['id']; ?>" <?php echo $search['category_id'] === $category['id'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($category['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">关键词</label>
-                <input type="text" class="form-control" name="keyword" 
-                       value="<?php echo xssFilter($search['keyword']); ?>" 
-                       placeholder="搜索描述...">
-            </div>
-            <div class="col-md-2 d-flex align-items-end gap-2">
-                <button type="submit" class="btn btn-primary">筛选</button>
-                <a href="records.php" class="btn btn-secondary">重置</a>
-            </div>
-        </form>
+        <!-- 在移动端默认折叠，大屏幕显示 -->
+        <div class="collapse d-md-block" id="filterFormCollapse">
+            <form method="get" action="records.php" class="row g-3">
+                <div class="col-md-2">
+                    <label class="form-label">开始日期</label>
+                    <input type="date" class="form-control" name="startDate" 
+                           value="<?php echo $search['startDate']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">结束日期</label>
+                    <input type="date" class="form-control" name="endDate" 
+                           value="<?php echo $search['endDate']; ?>">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">类型</label>
+                    <select class="form-select" name="type" id="type" onchange="updateCategories(this.value)">
+                        <option value="">全部</option>
+                        <option value="收入" <?php echo $search['type'] === '收入' ? 'selected' : ''; ?>>收入</option>
+                        <option value="支出" <?php echo $search['type'] === '支出' ? 'selected' : ''; ?>>支出</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">分类</label>
+                    <select class="form-select" name="category_id" id="category">
+                        <option value="">全部</option>
+                        <?php if (!empty($search['type'])): ?>
+                        <?php foreach (getCategories($pdo, $search['type']) as $category): ?>
+                            <option value="<?php echo $category['id']; ?>" <?php echo $search['category_id'] === $category['id'] ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">关键词</label>
+                    <input type="text" class="form-control" name="keyword" 
+                           value="<?php echo xssFilter($search['keyword']); ?>" 
+                           placeholder="搜索描述...">
+                </div>
+                <div class="col-md-2 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary">筛选</button>
+                    <a href="records.php" class="btn btn-secondary">重置</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -174,82 +174,89 @@ require_once '../includes/header.php';
 
 <!-- 添加记录表单 -->
 <div class="card mb-4">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">添加新记录</h5>
+        <!-- 移动端添加按钮 -->
+        <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#addRecordForm" aria-expanded="false" aria-controls="addRecordForm">
+            <i class="bi bi-plus-circle"></i> 添加记录
+        </button>
     </div>
     <div class="card-body">
-        <form action="manage.php" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="add">
-            
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="date" class="form-label">日期</label>
-                    <input type="date" class="form-control" id="date" name="date" 
-                           value="<?php echo date('Y-m-d'); ?>" required>
-                </div>
-                <div class="col-md-3">
-                    <label for="type" class="form-label">类型</label>
-                    <select class="form-select" id="type" name="type" required onchange="updateCategories(this.value)">
-                        <option value="支出">支出</option>
-                        <option value="收入">收入</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="category" class="form-label">分类</label>
-                    <select class="form-select" id="category" name="category_id" required>
-                        <option value="">请选择分类</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="amount" class="form-label">金额</label>
-                    <input type="number" class="form-control" id="amount" name="amount" 
-                           step="0.01" required>
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="description" class="form-label">描述</label>
-                <input type="text" class="form-control" id="description" name="description" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="attachment" class="form-label">附件</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" id="attachment" name="attachment" 
-                           accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,
-                                   video/mp4,video/x-msvideo,video/quicktime,video/x-ms-wmv,video/x-flv,video/x-matroska,video/webm,video/3gpp,
-                                   audio/*">
-                    <div class="invalid-feedback">
-                        请选择有效的文件
+        <!-- 在移动端默认折叠，大屏幕显示 -->
+        <div class="collapse d-md-block" id="addRecordForm">
+            <form action="manage.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add">
+                
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="date" class="form-label">日期</label>
+                        <input type="date" class="form-control" id="date" name="date" 
+                               value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="type" class="form-label">类型</label>
+                        <select class="form-select" id="type" name="type" required onchange="updateCategories(this.value)">
+                            <option value="支出">支出</option>
+                            <option value="收入">收入</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="category" class="form-label">分类</label>
+                        <select class="form-select" id="category" name="category_id" required>
+                            <option value="">请选择分类</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="amount" class="form-label">金额</label>
+                        <input type="number" class="form-control" id="amount" name="amount" 
+                               step="0.01" required>
                     </div>
                 </div>
-                <div class="form-text">
-                    <i class="bi bi-info-circle me-1"></i>
-                    支持的格式：<br>
-                    • 图片：所有常见图片格式（如JPG、PNG、GIF等）<br>
-                    • 文档：PDF、Word(DOC/DOCX)、Excel(XLS/XLSX)、PPT(PPT/PPTX)<br>
-                    • 视频：MP4、AVI、MOV、WMV、FLV、MKV、WEBM、3GP<br>
-                    • 音频：所有常见音频格式（如MP3、WAV等）<br>
-                    • 其他文件将保存在misc目录
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">描述</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
                 </div>
-                <!-- 预览容器 -->
-                <div id="preview-container" class="mt-3 d-none">
-                    <div class="card" style="max-width: 300px;">
-                        <div class="card-body p-2 text-center position-relative">
-                            <div style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center;">
-                                <img id="image-preview" class="rounded" 
-                                     style="max-width: 100%; max-height: 150px; width: auto; height: auto; object-fit: contain;" 
-                                     alt="图片预览">
+                
+                <div class="mb-3">
+                    <label for="attachment" class="form-label">附件</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="attachment" name="attachment" 
+                               accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,
+                                       video/mp4,video/x-msvideo,video/quicktime,video/x-ms-wmv,video/x-flv,video/x-matroska,video/webm,video/3gpp,
+                                       audio/*">
+                        <div class="invalid-feedback">
+                            请选择有效的文件
+                        </div>
+                    </div>
+                    <div class="form-text">
+                        <i class="bi bi-info-circle me-1"></i>
+                        支持的格式：<br>
+                        • 图片：所有常见图片格式（如JPG、PNG、GIF等）<br>
+                        • 文档：PDF、Word(DOC/DOCX)、Excel(XLS/XLSX)、PPT(PPT/PPTX)<br>
+                        • 视频：MP4、AVI、MOV、WMV、FLV、MKV、WEBM、3GP<br>
+                        • 音频：所有常见音频格式（如MP3、WAV等）<br>
+                        • 其他文件将保存在misc目录
+                    </div>
+                    <!-- 预览容器 -->
+                    <div id="preview-container" class="mt-3 d-none">
+                        <div class="card" style="max-width: 300px;">
+                            <div class="card-body p-2 text-center position-relative">
+                                <div style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                    <img id="image-preview" class="rounded" 
+                                         style="max-width: 100%; max-height: 150px; width: auto; height: auto; object-fit: contain;" 
+                                         alt="图片预览">
+                                </div>
+                                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" 
+                                        id="remove-preview" aria-label="关闭预览"></button>
                             </div>
-                            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" 
-                                    id="remove-preview" aria-label="关闭预览"></button>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <button type="submit" class="btn btn-primary">添加记录</button>
-        </form>
+                
+                <button type="submit" class="btn btn-primary">添加记录</button>
+            </form>
+        </div>
     </div>
 </div>
 
