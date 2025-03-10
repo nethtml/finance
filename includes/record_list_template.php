@@ -199,7 +199,18 @@ if (!function_exists('formatAmount')) {
                             <?php endif; ?>
                         <?php endif; ?>
                     </td>
-                    <td><?php echo htmlspecialchars($record['description']); ?></td>
+                    <td>
+                        <div class="description-text" data-description="<?php echo htmlspecialchars($record['description']); ?>">
+                            <?php echo htmlspecialchars($record['description']); ?>
+                        </div>
+                        <?php if (mb_strlen($record['description']) > 50): ?>
+                        <div class="mt-1">
+                            <span class="show-more-btn" data-description="<?php echo htmlspecialchars($record['description']); ?>">
+                                显示全文
+                            </span>
+                        </div>
+                        <?php endif; ?>
+                    </td>
                     <?php if ($showActions): ?>
                     <td>
                         <button type="button" class="btn btn-sm btn-primary edit-record" data-record='<?php echo json_encode($record); ?>'>
@@ -248,6 +259,21 @@ if (!function_exists('formatAmount')) {
             <button type="button" class="btn-close position-fixed top-0 end-0 m-3 d-sm-none" data-bs-dismiss="modal" aria-label="关闭" style="z-index: 1051;"></button>
             <div class="modal-body p-0 text-center" style="background: #fff;">
                 <img src="" id="previewImage" alt="预览图片" style="max-width: 100%; max-height: 100vh; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 说明全文模态框 -->
+<div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered description-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">详细说明</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body">
+                <p id="fullDescription" class="mb-0"></p>
             </div>
         </div>
     </div>
@@ -922,6 +948,122 @@ video:hover::-webkit-media-controls-panel {
         object-fit: contain !important;
     }
 }
+
+/* 说明文本样式 */
+.description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+    max-height: 2.8em;
+    line-height: 1.4;
+    margin-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+    .description-text {
+        font-size: 0.875rem;
+    }
+}
+
+.description-text.has-more {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.description-text.has-more:hover {
+    color: #0d6efd;
+}
+
+.show-more-btn {
+    display: none;
+}
+
+/* 说明模态框样式 */
+.description-modal {
+    max-width: 320px !important;
+    margin: 1.75rem auto;
+}
+
+.description-modal .modal-content {
+    background: #fff !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    width: auto;
+    min-width: 280px;
+    height: auto !important;
+}
+
+.description-modal .modal-header {
+    padding: 0.625rem 1rem;  /* 减小头部高度 */
+    background: #fff !important;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.description-modal .modal-header .modal-title {
+    font-size: 1rem;  /* 调整标题字体大小 */
+    line-height: 1.5;
+    margin: 0;
+}
+
+.description-modal .modal-header .btn-close {
+    padding: 0.5rem;  /* 调整关闭按钮大小 */
+}
+
+.description-modal .modal-body {
+    padding: 1rem 1.25rem;  /* 增加左右内边距 */
+    background: #fff !important;
+    white-space: pre-wrap;
+    word-break: break-word;
+    height: auto !important;
+    max-height: none !important;
+}
+
+.description-modal .modal-body p {
+    margin: 0;
+    line-height: 1.6;  /* 增加行高 */
+    font-size: 1rem;  /* 增大字体 */
+}
+
+@media (max-width: 575.98px) {
+    .description-modal {
+        margin: 0.75rem auto;
+        width: calc(100% - 2rem) !important;
+    }
+    
+    .description-modal .modal-content {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .description-modal .modal-header {
+        padding: 0.5rem 1rem;  /* 移动端进一步减小头部高度 */
+    }
+    
+    .description-modal .modal-body {
+        padding: 1rem 1.25rem;  /* 保持移动端也有足够的左右内边距 */
+        font-size: 0.9375rem;  /* 移动端字体稍微小一点但不要太小 */
+    }
+
+    .description-modal .modal-body p {
+        font-size: 0.9375rem;  /* 移动端字体稍微小一点但不要太小 */
+    }
+}
+
+/* 修改模态框背景遮罩 */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    opacity: 1 !important;
+}
+
+/* 确保模态框内容区域背景色不透明 */
+.modal .modal-content {
+    background-color: #fff !important;
+}
 </style>
 
 <script>
@@ -1098,6 +1240,62 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target === this) {
                 currentModal.hide();
             }
+        });
+    })();
+
+    // 说明文本展开功能
+    (function() {
+        const descriptionModal = document.getElementById('descriptionModal');
+        const fullDescription = document.getElementById('fullDescription');
+        let descModal = null;
+        
+        // 为所有说明文本添加点击事件
+        document.querySelectorAll('.description-text').forEach(element => {
+            // 检测是否需要显示"更多"
+            const isOverflowing = element.scrollHeight > element.clientHeight;
+            if (isOverflowing) {
+                element.classList.add('has-more');
+                
+                // 添加点击事件
+                element.addEventListener('click', function(e) {
+                e.preventDefault();
+                const description = this.getAttribute('data-description');
+                
+                if (!descModal) {
+                        descModal = new bootstrap.Modal(descriptionModal, {
+                            backdrop: true,
+                            keyboard: true
+                        });
+                }
+                
+                    // 设置内容
+                fullDescription.textContent = description;
+                    
+                    // 显示模态框
+                descModal.show();
+                    
+                    // 调整模态框大小
+                    requestAnimationFrame(() => {
+                        const modalContent = descriptionModal.querySelector('.modal-content');
+                        
+                        // 根据内容调整模态框宽度
+                        const contentWidth = Math.min(320, Math.max(280, fullDescription.offsetWidth + 40));
+                        modalContent.style.width = `${contentWidth}px`;
+                    });
+            });
+            }
+        });
+
+        // 在窗口大小改变时重新检查
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+        document.querySelectorAll('.description-text').forEach(element => {
+                    const isOverflowing = element.scrollHeight > element.clientHeight;
+                    element.classList.toggle('has-more', isOverflowing);
+                });
+            }, 250);
         });
     })();
 
