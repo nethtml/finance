@@ -1155,79 +1155,68 @@ video:hover::-webkit-media-controls-panel {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 添加最大化按钮功能
-    document.querySelectorAll('.maximize-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const modal = this.closest('.modal');
-            const icon = this.querySelector('.bi');
-            
-            if (modal.classList.contains('maximized')) {
-                // 还原模态框
-                restoreModal(modal, icon, this);
-            } else {
-                // 最大化模态框
-                maximizeModal(modal, icon, this);
-            }
-        });
-    });
+    // 历史状态管理
+    let isModalOpen = false;
+    let currentModal = null;
+    let currentModalType = null;
     
-    // 监听所有模态框的隐藏事件
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('hide.bs.modal', function() {
-            // 如果模态框是最大化状态，先还原
-            if (this.classList.contains('maximized')) {
-                const maximizeBtn = this.querySelector('.maximize-btn');
-                const icon = maximizeBtn?.querySelector('.bi');
-                if (maximizeBtn) {
-                    restoreModal(this, icon, maximizeBtn);
-                }
-            }
-            
-            // 确保移除所有可能影响页面交互的样式
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-            
-            // 移除所有遮罩层
-            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-                backdrop.remove();
-            });
-        });
-
-        modal.addEventListener('hidden.bs.modal', function() {
-            // 再次确保清理所有状态
-            this.style.display = 'none';
-            this.setAttribute('aria-hidden', 'true');
-            this.removeAttribute('aria-modal');
-            this.removeAttribute('role');
-            
-            // 确保页面可以滚动
-            document.body.classList.remove('modal-open');
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-        });
-    });
+    // 在页面加载时添加初始状态
+    window.history.replaceState({ initial: true }, '', window.location.pathname);
     
-    // 监听窗口大小变化
-    window.addEventListener('resize', function() {
-        const maximizedModals = document.querySelectorAll('.modal.maximized');
-        maximizedModals.forEach(modal => {
-            if (modal.classList.contains('maximized')) {
-                const modalBody = modal.querySelector('.modal-body');
-                if (modalBody) {
-                    const headerHeight = modal.querySelector('.modal-header')?.offsetHeight || 0;
-                    modalBody.style.height = `calc(100vh - ${headerHeight}px)`;
-                }
+    function handleHistoryChange(event) {
+        if (isModalOpen) {
+            event.preventDefault();
+            
+            switch (currentModalType) {
+                case 'image':
+                    if (currentModal) {
+                        currentModal.hide();
+                    }
+                    break;
+                case 'audio':
+                    if (currentModal) {
+                        currentModal.hide();
+                    }
+                    break;
+                case 'video':
+                    if (window.innerWidth <= 576) {
+                        const mobileVideoContainer = document.getElementById('mobileVideoContainer');
+                        const mobileVideoPlayer = document.getElementById('mobileVideoPlayer');
+                        if (mobileVideoPlayer) {
+                            mobileVideoPlayer.pause();
+                            mobileVideoPlayer.currentTime = 0;
+                            mobileVideoPlayer.src = '';
+                        }
+                        if (mobileVideoContainer) {
+                            mobileVideoContainer.style.display = 'none';
+                            mobileVideoContainer.style.zIndex = '-1';
+                        }
+                    } else if (currentModal) {
+                        currentModal.hide();
+                    }
+                    break;
+                case 'pdf':
+                    if (currentModal) {
+                        currentModal.hide();
+                    }
+                    break;
             }
-        });
-    });
-
-    // 原有的图片预览相关代码
+            
+            isModalOpen = false;
+            currentModal = null;
+            currentModalType = null;
+        }
+    }
+    
+    // 监听返回按钮和手势
+    window.addEventListener('popstate', handleHistoryChange);
+    
+    // 修改图片预览相关代码
     (function() {
         const imagePreviewModal = document.getElementById('imagePreviewModal');
         const modalDialog = imagePreviewModal.querySelector('.modal-dialog');
         const previewImage = document.getElementById('previewImage');
         const closeButton = imagePreviewModal.querySelector('.btn-close');
-        let currentModal = null;
         let lastFocusedElement = null;
 
         // 为所有查看图片按钮添加点击事件
@@ -1243,6 +1232,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!currentModal) {
                 currentModal = new bootstrap.Modal(imagePreviewModal);
+            }
+            
+            // 添加历史记录
+            if (!isModalOpen) {
+                window.history.pushState({ modal: 'image' }, '', window.location.pathname);
+                isModalOpen = true;
+                currentModalType = 'image';
             }
             
             loadImage(this.getAttribute('data-image-path'));
@@ -1297,6 +1293,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         imagePreviewModal.addEventListener('hidden.bs.modal', function() {
+            if (isModalOpen) {
+                isModalOpen = false;
+                currentModal = null;
+                currentModalType = null;
+                if (window.history.state && window.history.state.modal) {
+                    window.history.back();
+                }
+            }
+
             document.body.style.overflow = '';
             document.body.style.removeProperty('padding-right');
             previewImage.src = '';
@@ -1398,13 +1403,19 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const pdfPath = this.getAttribute('data-pdf-path');
             
-            // 移动端直接在新标签页打开PDF
+            // 移动端直接在新标签页打开PDF，不需要处理历史记录
             if (window.innerWidth <= 576) {
                 window.open(pdfPath, '_blank');
                 return;
             }
             
             // PC端使用模态框显示
+            if (!isModalOpen) {
+                window.history.pushState({ modal: 'pdf' }, '', window.location.pathname);
+                isModalOpen = true;
+                currentModal = pdfModal;
+            }
+            
             pdfLastFocusedElement = document.activeElement;
             
             if (!pdfModal) {
@@ -1425,6 +1436,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 监听PDF模态框事件
     pdfPreviewModal.addEventListener('hidden.bs.modal', function() {
+        isModalOpen = false;
+        currentModal = null;
         pdfViewer.src = '';
         
         const elementToFocus = pdfLastFocusedElement;
@@ -1459,6 +1472,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     backdrop: true,
                     keyboard: true
                 });
+            }
+            
+            // 添加历史记录
+            if (!isModalOpen) {
+                window.history.pushState({ modal: 'audio' }, '', window.location.pathname);
+                isModalOpen = true;
+                currentModal = audioModal;
+                currentModalType = 'audio';
             }
             
             // 设置音频标题
@@ -1497,6 +1518,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     audioPreviewModal.addEventListener('hidden.bs.modal', function() {
+        if (isModalOpen) {
+            isModalOpen = false;
+            currentModal = null;
+            currentModalType = null;
+            if (window.history.state && window.history.state.modal) {
+                window.history.back();
+            }
+        }
         // 停止音频播放
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
@@ -1631,9 +1660,15 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const videoPath = this.getAttribute('data-video-path');
             
-            // 检查是否为移动设备
+            // 添加历史记录
+            if (!isModalOpen) {
+                window.history.pushState({ modal: 'video' }, '', window.location.pathname);
+                isModalOpen = true;
+                currentModalType = 'video';
+            }
+            
             if (window.innerWidth <= 576) {
-                // 移动端：使用独立的视频播放器
+                // 移动端视频播放器代码
                 const mobileVideoContainer = document.getElementById('mobileVideoContainer');
                 const mobileVideoPlayer = document.getElementById('mobileVideoPlayer');
                 const playOverlay = document.getElementById('mobileVideoPlayOverlay');
@@ -1652,14 +1687,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 显示播放按钮遮罩层
                 playOverlay.classList.remove('hidden');
                 
-                // 关闭按钮点击事件
+                // 修改关闭按钮事件
                 const closeVideo = () => {
+                    if (isModalOpen) {
+                        isModalOpen = false;
+                        currentModal = null;
+                        currentModalType = null;
+                        if (window.history.state && window.history.state.modal) {
+                            window.history.back();
+                        }
+                    }
                     mobileVideoPlayer.pause();
                     mobileVideoPlayer.currentTime = 0;
                     mobileVideoPlayer.src = '';
                     mobileVideoContainer.style.display = 'none';
                     mobileVideoContainer.style.zIndex = '-1';
-                    playOverlay.classList.remove('hidden');
                 };
                 
                 // 清除旧的事件监听器并添加新的
@@ -1692,22 +1734,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 // PC端：使用模态框播放
-                const videoModal = document.getElementById('videoPreviewModal');
-                const videoPlayer = document.getElementById('videoPlayer');
-                const videoPlayOverlay = document.getElementById('videoPlayOverlay');
-                
-                // 确保所有必要的元素都存在
-                if (!videoModal || !videoPlayer || !videoPlayOverlay) {
-                    console.error('Video player elements not found');
-                    return;
-                }
-                
-                const modalDialog = videoModal.querySelector('.modal-dialog');
-                if (!modalDialog) {
-                    console.error('Modal dialog not found');
-                    return;
-                }
-                
+                currentModal = videoModal_bs;
                 // 重置视频源和模态框样式
                 videoPlayer.src = '';
                 modalDialog.style.maxWidth = 'none';
