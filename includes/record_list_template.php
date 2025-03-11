@@ -301,21 +301,14 @@ if (!function_exists('formatAmount')) {
 
 <!-- 音频播放模态框 -->
 <div class="modal" id="audioPreviewModal" tabindex="-1" role="dialog" aria-modal="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered audio-modal" role="document">
         <div class="modal-content">
-            <div class="modal-header py-2 draggable d-none d-sm-flex">
+            <div class="modal-header py-2">
                 <h5 class="modal-title">音频播放</h5>
-                <div class="modal-buttons ms-auto">
-                    <button type="button" class="btn btn-sm btn-outline-secondary me-2 maximize-btn" aria-label="最大化">
-                        <i class="bi bi-fullscreen"></i>
-                    </button>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
-                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
             </div>
-            <!-- 移动端关闭按钮 -->
-            <button type="button" class="btn-close position-fixed top-0 end-0 m-3 d-sm-none" data-bs-dismiss="modal" aria-label="关闭" style="z-index: 1051;"></button>
-            <div class="modal-body text-center">
-                <h6 id="audioTitle" class="mb-3"></h6>
+            <div class="modal-body">
+                <h6 id="audioTitle" class="mb-3 text-center"></h6>
                 <audio id="audioPlayer" controls class="w-100">
                     您的浏览器不支持音频播放。
                 </audio>
@@ -1063,6 +1056,68 @@ video:hover::-webkit-media-controls-panel {
 /* 确保模态框内容区域背景色不透明 */
 .modal .modal-content {
     background-color: #fff !important;
+}
+
+/* 音频模态框样式 */
+.modal-dialog.audio-modal {
+    max-width: 400px !important;
+    width: auto !important;
+    margin: 3rem auto !important;
+}
+
+.modal-dialog.audio-modal .modal-content {
+    background: #fff !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-dialog.audio-modal .modal-header {
+    background: #fff !important;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.modal-dialog.audio-modal .modal-body {
+    padding: 1rem;
+    background: #fff !important;
+}
+
+.modal-dialog.audio-modal #audioTitle {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.75rem !important;
+    word-break: break-word;
+}
+
+.modal-dialog.audio-modal audio {
+    width: 100%;
+    margin: 0;
+}
+
+/* 移动端音频模态框样式 */
+@media (max-width: 575.98px) {
+    .modal-dialog.audio-modal {
+        margin: 2rem auto !important;
+        width: calc(100% - 2rem) !important;
+        max-width: 300px !important;
+    }
+    
+    .modal-dialog.audio-modal .modal-header {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .modal-dialog.audio-modal .modal-body {
+        padding: 0.75rem;
+    }
+    
+    .modal-dialog.audio-modal #audioTitle {
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .modal-dialog.audio-modal audio {
+        width: 100%;
+    }
 }
 </style>
 

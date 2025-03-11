@@ -57,10 +57,13 @@ require_once __DIR__ . '/path_helper.php';
                         <a class="nav-link" href="<?php echo getPagePath('pages/records.php'); ?>">流水列表</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo getPagePath('pages/manage.php'); ?>">记录管理</a>
+                        <a class="nav-link" href="https://github.com/nethtml/finance/" target="_blank">
+                            <i class="bi bi-github"></i>
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container mt-4"> 
+    <main>
+        <div class="container mt-4"> 

@@ -204,7 +204,7 @@ function getRecords($pdo, $filters = []) {
             $sql .= " WHERE " . implode(" AND ", $where);
         }
         
-        $sql .= " ORDER BY r.date DESC";
+        $sql .= " ORDER BY r.date DESC, r.id DESC";
         
         if (isset($filters['limit'])) {
             $sql .= " LIMIT :offset, :limit";

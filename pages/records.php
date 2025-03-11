@@ -71,7 +71,7 @@ try {
             FROM records r 
             JOIN records_categories rc ON r.category_id = rc.id 
             $whereClause 
-            ORDER BY r.date DESC 
+            ORDER BY r.date DESC, r.id DESC 
             LIMIT :offset, :limit";
     $stmt = $pdo->prepare($sql);
     

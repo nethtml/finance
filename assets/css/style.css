@@ -225,6 +225,16 @@
     position: relative;
 }
 
+/* GitHub图标样式 */
+.nav-link .bi-github {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover .bi-github {
+    transform: scale(1.15);
+}
+
 .nav-link:hover, .nav-link:focus {
     color: #0984e3 !important;
     background: rgba(9, 132, 227, 0.05);
@@ -298,5 +308,303 @@
     .nav-link:hover::after,
     .nav-link.active::after {
         width: 30px;
+    }
+}
+
+/* 页面布局 */
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+main {
+    flex: 1;
+    padding-bottom: 120px; /* 给footer预留空间 */
+}
+
+/* Footer样式 */
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.5rem 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.copyright {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.friend-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.friend-links li a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.friend-links li a:hover {
+    color: #0984e3;
+}
+
+/* 后台管理图标样式 */
+.admin-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem;
+    vertical-align: middle;
+}
+
+.admin-link .bi-gear-fill {
+    font-size: 0.95rem;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.admin-link:hover .bi-gear-fill {
+    transform: rotate(90deg);
+}
+
+@media (max-width: 767.98px) {
+    main {
+        padding-bottom: 100px;
+    }
+    
+    .footer {
+        padding: 1rem 0;
+    }
+    
+    .friend-links {
+        justify-content: center;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .friend-links li {
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* 首页欢迎区域样式 */
+.welcome-container {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+}
+
+.welcome-section {
+    padding: 2rem;
+    width: 100%;
+}
+
+.welcome-title {
+    color: #2d3436;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+    color: #636e72;
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.welcome-image {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.welcome-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.welcome-image img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* 功能卡片样式 */
+.desktop-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+.desktop-layout .welcome-image {
+    width: 400px;
+    flex-shrink: 0;
+}
+
+.desktop-layout .welcome-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.desktop-layout .feature-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mobile-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.mobile-layout .welcome-image {
+    width: 300px;
+    margin: 0 auto 2rem;
+}
+
+.mobile-layout .feature-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.mobile-layout .feature-card {
+    width: 280px;
+}
+
+.feature-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #2d3436;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 280px;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: #0984e3;
+    color: #2d3436;
+}
+
+.feature-icon {
+    background: rgba(9, 132, 227, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.feature-icon i {
+    font-size: 1.5rem;
+    color: #0984e3;
+}
+
+.feature-content {
+    text-align: center;
+}
+
+.feature-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+    font-size: 0.9rem;
+    color: #636e72;
+    margin: 0;
+}
+
+@media (max-width: 991.98px) {
+    .welcome-container {
+        padding: 1rem 0;
+        min-height: auto;
+    }
+
+    .welcome-section {
+        padding: 1rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .feature-cards {
+        gap: 1rem;
+    }
+
+    .feature-card {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .welcome-title {
+        font-size: 1.75rem;
+    }
+
+    .welcome-image {
+        width: 70%;
+        margin-bottom: 2rem;
+    }
+}
+
+/* 音频和视频模态框样式 */
+@media (max-width: 575.98px) {
+    .modal-dialog.audio-modal {
+        max-width: 300px !important;
+        margin: 2rem auto;
+    }
+    
+    #videoPreviewModal .modal-dialog {
+        max-width: 300px !important;
+        margin: 2rem auto;
+    }
+    
+    #videoPreviewModal .modal-content {
+        max-height: 400px;
+    }
+    
+    #videoPreviewModal .video-container {
+        max-height: 350px;
     }
 } 
