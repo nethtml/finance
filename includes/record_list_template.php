@@ -308,10 +308,14 @@ if (!function_exists('formatAmount')) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
             </div>
             <div class="modal-body">
-                <h6 id="audioTitle" class="mb-3 text-center"></h6>
+                <div class="d-flex flex-column align-items-center justify-content-center w-100 h-100">
+                    <h6 id="audioTitle" class="text-center"></h6>
+                    <div class="audio-player-container">
                 <audio id="audioPlayer" controls class="w-100">
                     您的浏览器不支持音频播放。
                 </audio>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1089,34 +1093,62 @@ video:hover::-webkit-media-controls-panel {
     word-break: break-word;
 }
 
+.modal-dialog.audio-modal .audio-player-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
 .modal-dialog.audio-modal audio {
     width: 100%;
     margin: 0;
+    display: block;
 }
 
 /* 移动端音频模态框样式 */
 @media (max-width: 575.98px) {
     .modal-dialog.audio-modal {
-        margin: 2rem auto !important;
-        width: calc(100% - 2rem) !important;
-        max-width: 300px !important;
+        margin: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+    }
+    
+    .modal-dialog.audio-modal .modal-content {
+        height: 100vh !important;
+        border-radius: 0 !important;
+        border: none !important;
     }
     
     .modal-dialog.audio-modal .modal-header {
         padding: 0.5rem 0.75rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+        background: #fff !important;
     }
     
     .modal-dialog.audio-modal .modal-body {
         padding: 0.75rem;
+        margin-top: 56px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: calc(100vh - 56px) !important;
+    }
+
+    .modal-dialog.audio-modal .audio-player-container {
+        width: 90%;
+        margin: 0 auto;
     }
     
     .modal-dialog.audio-modal #audioTitle {
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .modal-dialog.audio-modal audio {
-        width: 100%;
+        font-size: 1rem;
+        margin: 1rem 0 2rem !important;
+        text-align: center;
+        padding: 0 1rem;
     }
 }
 </style>
@@ -1337,7 +1369,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const contentWidth = Math.min(320, Math.max(280, fullDescription.offsetWidth + 40));
                         modalContent.style.width = `${contentWidth}px`;
                     });
-            });
+                });
             }
         });
 
@@ -1429,18 +1461,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            audioTitle.textContent = this.getAttribute('data-audio-name');
-            audioPlayer.src = this.getAttribute('data-audio-path');
+            // 设置音频标题
+            const audioName = this.getAttribute('data-audio-name');
+            audioTitle.textContent = audioName;
+            
+            // 设置音频源
+            const audioPath = this.getAttribute('data-audio-path');
+            audioPlayer.src = audioPath;
+            
+            // 在移动端添加额外的样式
+            if (window.innerWidth <= 576) {
+                document.body.style.overflow = 'hidden';
+                audioPreviewModal.classList.add('mobile-view');
+            }
+            
             audioModal.show();
+            
+            // 确保音频标题可见
+            requestAnimationFrame(() => {
+                audioTitle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
         });
     });
 
     // 监听音频模态框事件
+    audioPreviewModal.addEventListener('shown.bs.modal', function() {
+        // 在移动端，调整布局
+        if (window.innerWidth <= 576) {
+            const modalDialog = this.querySelector('.modal-dialog');
+            modalDialog.style.margin = '0';
+            modalDialog.style.width = '100vw';
+            modalDialog.style.maxWidth = '100vw';
+            modalDialog.style.height = '100vh';
+        }
+    });
+
     audioPreviewModal.addEventListener('hidden.bs.modal', function() {
+        // 停止音频播放
         audioPlayer.pause();
+        audioPlayer.currentTime = 0;
         audioPlayer.src = '';
         audioTitle.textContent = '';
         
+        // 移除移动端特定样式
+        document.body.style.overflow = '';
+        this.classList.remove('mobile-view');
+        
+        // 移除所有模态框背景
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+        
+        // 恢复焦点
         const elementToFocus = audioLastFocusedElement;
         audioLastFocusedElement = null;
         
@@ -1452,6 +1522,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.warn('Failed to restore audio modal focus:', e);
                 }
             });
+        }
+    });
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', function() {
+        if (audioPreviewModal.classList.contains('show')) {
+            if (window.innerWidth <= 576) {
+                audioPreviewModal.classList.add('mobile-view');
+                document.body.style.overflow = 'hidden';
+            } else {
+                audioPreviewModal.classList.remove('mobile-view');
+                document.body.style.overflow = '';
+            }
         }
     });
 
