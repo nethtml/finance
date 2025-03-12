@@ -1599,6 +1599,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 videoPlayer.currentTime = 0;
                 videoPlayer.src = '';
             }
+            // 在隐藏之前移除所有按钮的焦点
+            videoModal.querySelectorAll('button').forEach(button => {
+                button.blur();
+            });
         });
         
         videoModal.addEventListener('hidden.bs.modal', function() {
@@ -1614,6 +1618,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // 重置播放按钮显示
             if (videoPlayOverlay) {
                 videoPlayOverlay.classList.remove('hidden');
+            }
+            // 确保移除所有按钮的焦点
+            videoModal.querySelectorAll('button').forEach(button => {
+                button.blur();
+            });
+            // 将焦点返回到触发模态框的按钮
+            const lastFocusedButton = document.querySelector('.view-video[data-video-path="' + videoPlayer.getAttribute('src') + '"]');
+            if (lastFocusedButton) {
+                lastFocusedButton.focus();
             }
         });
         
