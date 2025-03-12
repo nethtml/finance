@@ -6,10 +6,16 @@
  * @date 2024-03-xx
  */
 
+// 启动会话
+session_start();
+
 // 包含必要的文件
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/header.php';
+
+// 检查登录状态
+$isLoggedIn = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
 ?>
 
 <div class="welcome-container">
