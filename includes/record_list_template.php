@@ -1572,6 +1572,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoPlayer = document.getElementById('videoPlayer');
     const videoPlayOverlay = document.getElementById('videoPlayOverlay');
     const mobileVideoContainer = document.getElementById('mobileVideoContainer');
+    const videoModalDialog = videoModal ? videoModal.querySelector('.modal-dialog') : null;
     let videoModal_bs = null;
     let activeVideoPlayer = null;
     
@@ -1737,9 +1738,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentModal = videoModal_bs;
                 // 重置视频源和模态框样式
                 videoPlayer.src = '';
-                modalDialog.style.maxWidth = 'none';
-                modalDialog.style.width = '';
-                modalDialog.style.opacity = '0';
+                videoModalDialog.style.maxWidth = 'none';
+                videoModalDialog.style.width = '';
+                videoModalDialog.style.opacity = '0';
                 
                 // 加载视频获取尺寸
                 const tempVideo = document.createElement('video');
@@ -1756,7 +1757,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const finalWidth = Math.round(videoWidth * ratio);
                     
                     // 设置模态框宽度
-                    modalDialog.style.width = finalWidth + 'px';
+                    videoModalDialog.style.width = finalWidth + 'px';
                     
                     // 设置视频源并显示模态框
                     videoPlayer.src = videoPath;
@@ -1786,13 +1787,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         videoPlayOverlay.classList.remove('hidden');
                     });
                     
-                    const modal = new bootstrap.Modal(videoModal);
-                    modal.show();
+                    videoModal_bs.show();
                     
                     // 添加过渡动画
                     setTimeout(() => {
-                        modalDialog.style.opacity = '1';
-                        modalDialog.style.transition = 'opacity 0.15s linear';
+                        videoModalDialog.style.opacity = '1';
+                        videoModalDialog.style.transition = 'opacity 0.15s linear';
                     }, 50);
                 };
                 
@@ -1802,12 +1802,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // 监听模态框关闭事件
                 videoModal.addEventListener('hidden.bs.modal', function() {
+                    if (isModalOpen) {
+                        isModalOpen = false;
+                        currentModal = null;
+                        currentModalType = null;
+                        if (window.history.state && window.history.state.modal) {
+                            window.history.back();
+                        }
+                    }
                     videoPlayer.pause();
                     videoPlayer.currentTime = 0;
                     videoPlayer.src = '';
-                    modalDialog.style.opacity = '0';
-                    modalDialog.style.transition = '';
-                    modalDialog.style.width = '';
+                    videoModalDialog.style.opacity = '0';
+                    videoModalDialog.style.transition = '';
+                    videoModalDialog.style.width = '';
                 }, { once: true });
             }
         });
