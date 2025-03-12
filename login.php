@@ -58,7 +58,7 @@ try {
     error_log('Username: ' . $username);
     
     // 验证用户名和密码
-    if ($username === 'admin' && $password === 'admin123') {
+    if ($username === 'admin' && $password === 'lzw111115') {
         $_SESSION['admin_logged_in'] = true;
         
         error_log('Login successful');

@@ -1374,7 +1374,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const contentWidth = Math.min(320, Math.max(280, fullDescription.offsetWidth + 40));
                         modalContent.style.width = `${contentWidth}px`;
                     });
-                });
+            });
             }
         });
 

@@ -21,7 +21,7 @@ if (!function_exists('getAssetPath')) {
                 </div>
                 <div class="col-md-6">
                     <ul class="friend-links">
-                        <li><a href="https://lizhenwei.cn" target="_blank">Lee.Sir</a></li>
+                        <li><a href="https://lizhenwei.cn" target="_blank">lizhenwei.cn</a></li>
                         <li><a href="https://github.com/nethtml/finance/" target="_blank">关于我们</a></li>
                         <li><a href="#" class="admin-link" title="后台管理">
                             <i class="bi bi-gear-fill"></i>
