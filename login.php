@@ -1,28 +1,5 @@
 <?php
-// 检查 session 目录是否存在且可写
-$sessionPath = 'D:/phpstudy/Extensions/tmp/tmp';
-if (!file_exists($sessionPath)) {
-    mkdir($sessionPath, 0777, true);
-    error_log('Created session directory: ' . $sessionPath);
-}
-
-// 确保 session 目录可写
-if (!is_writable($sessionPath)) {
-    chmod($sessionPath, 0777);
-    error_log('Made session directory writable: ' . $sessionPath);
-}
-
-// 在启动 session 前记录信息
-error_log('Before session_start()');
-error_log('Session save path: ' . session_save_path());
-error_log('Session ID: ' . session_id());
-
-session_start();
-
-// session 启动后记录信息
-error_log('After session_start()');
-error_log('New Session ID: ' . session_id());
-error_log('Session status: ' . session_status());
+require_once __DIR__ . '/includes/session.php';
 
 header('Content-Type: application/json');
 
