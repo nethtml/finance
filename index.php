@@ -1,18 +1,15 @@
 <?php
 /**
- * 入口文件
+ * 首页
  * 
- * @version 1.0
+ * @version 1.4
  * @date 2024-03-xx
  */
 
-// 启动会话
-session_start();
-
-// 包含必要的文件
-require_once 'includes/db.php';
-require_once 'includes/functions.php';
-require_once 'includes/header.php';
+require_once __DIR__ . '/includes/session.php';
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/header.php';
 
 // 检查登录状态
 $isLoggedIn = isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;

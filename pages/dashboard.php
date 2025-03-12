@@ -6,6 +6,7 @@
  * @date 2024-03-xx
  */
 
+require_once __DIR__ . '/../includes/session.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/path_helper.php';
 

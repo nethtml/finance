@@ -6,9 +6,9 @@
  * @date 2024-03-xx
  */
 
-// 包含必要的文件
-require_once '../includes/db.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 // 处理搜索参数
 $search = [

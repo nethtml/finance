@@ -26,6 +26,11 @@ if (!function_exists('getAssetPath')) {
                         <li><a href="#" class="admin-link" title="后台管理">
                             <i class="bi bi-gear-fill"></i>
                         </a></li>
+                        <?php if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true): ?>
+                        <li><a href="#" class="logout-link" title="退出登录">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -44,7 +49,7 @@ if (!function_exists('getAssetPath')) {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="关闭"></button>
     </div>
 
-    <!-- 登录模态框 -->
+    <!-- 登录/退出模态框 -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="modalTitle">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 320px;">
             <div class="modal-content" role="dialog">
@@ -91,6 +96,43 @@ if (!function_exists('getAssetPath')) {
     <!-- 自定义JS -->
     <script src="<?php echo getAssetPath('js/main.js'); ?>"></script>
 
+    <style>
+    /* Cookie 提示框样式 */
+    #cookieAlert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        max-width: 400px;
+        z-index: 1050;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    #cookieAlert .bi-exclamation-triangle-fill {
+        font-size: 1.5rem;
+        color: #ffc107;
+    }
+
+    @media (max-width: 576px) {
+        #cookieAlert {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            max-width: none;
+        }
+    }
+
+    /* 添加退出按钮样式 */
+    .logout-link {
+        color: var(--bs-danger);
+    }
+    .logout-link:hover {
+        color: var(--bs-danger-hover, #bb2d3b);
+    }
+    .friend-links li:not(:last-child) {
+        margin-right: 1rem;
+    }
+    </style>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // 检查 Cookie 是否启用
@@ -115,6 +157,7 @@ if (!function_exists('getAssetPath')) {
         }
 
         const adminLink = document.querySelector('.admin-link');
+        const logoutLink = document.querySelector('.logout-link');
         const loginForm = document.getElementById('loginForm');
         const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
         const modalTitle = document.getElementById('modalTitle');
@@ -132,39 +175,47 @@ if (!function_exists('getAssetPath')) {
                 e.preventDefault();
             });
             
-            // 齿轮按钮点击事件
+            // 齿轮按钮点击事件 - 现在只处理登录和导航
             adminLink.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // 检查 Cookie 是否启用
-                if (!areCookiesEnabled()) {
-                    showCookieWarning();
-                    return;
-                }
-                
-                // 根据登录状态显示不同内容
                 if (isLoggedIn) {
-                    modalTitle.textContent = '退出登录';
-                    loginForm.classList.add('d-none');
-                    logoutConfirm.classList.remove('d-none');
-                    loginBtn.classList.add('d-none');
-                    logoutBtn.classList.remove('d-none');
+                    // 已登录状态下，直接跳转到管理页面
+                    window.location.href = window.location.pathname.includes('/pages/') ? 'manage.php' : 'pages/manage.php';
                 } else {
+                    // 未登录状态下，显示登录模态框
+                    if (!areCookiesEnabled()) {
+                        showCookieWarning();
+                        return;
+                    }
+                    
                     modalTitle.textContent = '管理员登录';
                     loginForm.classList.remove('d-none');
                     logoutConfirm.classList.add('d-none');
                     loginBtn.classList.remove('d-none');
                     logoutBtn.classList.add('d-none');
+                    loginModal.show();
                 }
-                
-                loginModal.show();
             });
+
+            // 退出按钮点击事件
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    modalTitle.textContent = '退出登录';
+                    loginForm.classList.add('d-none');
+                    logoutConfirm.classList.remove('d-none');
+                    loginBtn.classList.add('d-none');
+                    logoutBtn.classList.remove('d-none');
+                    loginModal.show();
+                });
+            }
             
             // 登录按钮点击事件
             loginBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // 再次检查 Cookie 是否启用
                 if (!areCookiesEnabled()) {
                     showCookieWarning();
                     loginModal.hide();
@@ -175,7 +226,6 @@ if (!function_exists('getAssetPath')) {
                 const password = document.getElementById('password').value;
                 const errorDiv = document.getElementById('loginError');
                 
-                // 构建正确的相对路径
                 const loginPath = window.location.pathname.includes('/pages/') ? '../login.php' : 'login.php';
                 
                 fetch(loginPath, {
@@ -207,7 +257,6 @@ if (!function_exists('getAssetPath')) {
             logoutBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // 构建正确的相对路径
                 const loginPath = window.location.pathname.includes('/pages/') ? '../login.php' : 'login.php';
                 
                 fetch(loginPath, {
@@ -227,7 +276,7 @@ if (!function_exists('getAssetPath')) {
                     }
                 });
             });
-            
+
             // 模态框打开前移除 aria-hidden
             modalElement.addEventListener('show.bs.modal', function() {
                 this.removeAttribute('aria-hidden');
@@ -287,31 +336,5 @@ if (!function_exists('getAssetPath')) {
         }
     });
     </script>
-
-    <style>
-    /* Cookie 提示框样式 */
-    #cookieAlert {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        max-width: 400px;
-        z-index: 1050;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
-
-    #cookieAlert .bi-exclamation-triangle-fill {
-        font-size: 1.5rem;
-        color: #ffc107;
-    }
-
-    @media (max-width: 576px) {
-        #cookieAlert {
-            top: 10px;
-            right: 10px;
-            left: 10px;
-            max-width: none;
-        }
-    }
-    </style>
 </body>
 </html> 
