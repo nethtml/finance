@@ -712,6 +712,185 @@ if (!function_exists('formatAmount')) {
     }
 }
 
+@media (max-width: 575.98px) {
+    /* 移动端按钮基础样式 */
+    .btn.d-flex {
+        width: 46px !important;
+        min-width: 46px !important;
+        max-width: 46px !important;
+        height: 46px !important;
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+    
+    /* 确保移动端按钮为正方形 */
+    .btn.d-flex .d-sm-none {
+        width: 100%;
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+    }
+    
+    /* 移动端图标和文字间距 */
+    .btn.d-flex .d-sm-none i {
+        margin-bottom: 2px;
+        font-size: 20px;
+        line-height: 1;
+    }
+    
+    .btn.d-flex .d-sm-none span {
+        font-size: 12px;
+        line-height: 1.2;
+        margin-top: 1px;
+    }
+    
+    /* 操作列按钮样式 */
+    .table td:last-child {
+        padding: 0 !important;
+        height: 46px !important;
+        white-space: normal !important;
+        width: 60px !important;
+    }
+
+    .table td:last-child .btn {
+        width: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+        height: 23px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .table td:last-child .btn:first-child {
+        margin-bottom: 2px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none {
+        flex-direction: row !important;
+        height: 100% !important;
+        gap: 3px !important;
+        justify-content: center !important;
+    }
+
+    .table td:last-child .btn .d-sm-none i {
+        margin: 0 !important;
+        font-size: 14px !important;
+    }
+
+    .table td:last-child .btn .d-sm-none span {
+        font-size: 11px !important;
+        margin: 0 !important;
+    }
+
+    /* 移动端编辑模态框样式 */
+    .modal-dialog.edit-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.edit-modal .modal-content {
+        border-radius: 0 !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+    }
+
+    .modal-dialog.edit-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+
+    .modal-dialog.edit-modal .modal-body {
+        padding: 1rem !important;
+        height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer {
+        padding: 0.75rem 1rem !important;
+        border-top: 1px solid #dee2e6 !important;
+        background: #fff !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* 移动端删除确认模态框样式 */
+    .modal-dialog.delete-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-content {
+        border-radius: 0 !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body {
+        padding: 2rem 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body i {
+        font-size: 3rem !important;
+        color: #ffc107 !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body p {
+        font-size: 1.1rem !important;
+        margin: 0 !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body small {
+        font-size: 0.9rem !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer {
+        padding: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
 /* 移动端按钮样式 */
 @media (max-width: 575.98px) {
     /* 移动端按钮基础样式 */
@@ -785,95 +964,154 @@ if (!function_exists('formatAmount')) {
         font-size: 11px !important;
         margin: 0 !important;
     }
-}
 
-/* 视频播放器样式 */
-.video-container {
-    background-color: transparent;
-    width: 100%;
-    height: calc(100vh - 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
+    /* 移动端编辑模态框样式 */
+    .modal-dialog.edit-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
 
-#videoPlayer, #mobileVideoPlayer {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: transparent;
-}
-
-.play-button-overlay {
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.play-button-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* 视频控制栏样式 */
-video::-webkit-media-controls-panel {
-    display: flex !important;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-video:hover::-webkit-media-controls-panel {
-    opacity: 1;
-}
-
-/* 确保模态框在移动端也能正常工作 */
-@media (max-width: 575.98px) {
-    .modal-content {
-        width: 100vw !important;
+    .modal-dialog.edit-modal .modal-content {
+        border-radius: 0 !important;
         height: 100vh !important;
         max-height: 100vh !important;
-        border: none !important;
-        border-radius: 0 !important;
-        background: transparent !important;
     }
-    
-    .modal-body {
-        padding: 0 !important;
-        height: 100vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: transparent !important;
-        overflow: hidden !important;
+
+    .modal-dialog.edit-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid #dee2e6 !important;
     }
-    
-    .video-container {
-        width: 100vw !important;
-        height: 100vh !important;
+
+    .modal-dialog.edit-modal .modal-body {
+        padding: 1rem !important;
+        height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer {
+        padding: 0.75rem 1rem !important;
+        border-top: 1px solid #dee2e6 !important;
+        background: #fff !important;
         position: fixed !important;
-        top: 0 !important;
+        bottom: 0 !important;
         left: 0 !important;
+        right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: transparent !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
     }
-    
-    #videoPlayer, #mobileVideoPlayer {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: contain !important;
+
+    /* 移动端删除确认模态框样式 */
+    .modal-dialog.delete-modal {
         margin: 0 !important;
-        padding: 0 !important;
-        background: transparent !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-content {
+        border-radius: 0 !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body {
+        padding: 2rem 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body i {
+        font-size: 3rem !important;
+        color: #ffc107 !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body p {
+        font-size: 1.1rem !important;
+        margin: 0 !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body small {
+        font-size: 0.9rem !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer {
+        padding: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
 
-/* PC端视频模态框样式 */
+/* PC端按钮样式 */
 @media (min-width: 576px) {
+    .btn.d-flex {
+        height: 31px !important;
+        padding: 0 4px !important;
+        width: 77px !important;
+        min-width: 77px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    /* PC端图标和文字间距 */
+    .btn.d-flex .d-sm-flex {
+        height: 100%;
+        align-items: center;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 4px !important;
+    }
+    
+    .btn.d-flex .d-sm-flex i {
+        font-size: 16px;
+        margin: 0 !important;
+    }
+    
+    .btn.d-flex .d-sm-flex .ms-1 {
+        margin: 0 !important;
+        font-size: 14px;
+    }
+
+    /* PC端操作列按钮样式 */
+    .table td:last-child {
+        white-space: nowrap !important;
+        padding: 0.5rem !important;
+    }
+
+    .table td:last-child .btn {
+        margin: 0 2px !important;
+    }
+
+    /* PC端视频模态框样式 */
     #videoPreviewModal .modal-dialog {
         max-width: 90vw;
         margin: 1.75rem auto;
@@ -1149,6 +1387,114 @@ video:hover::-webkit-media-controls-panel {
         margin: 1rem 0 2rem !important;
         text-align: center;
         padding: 0 1rem;
+    }
+}
+
+/* 确保模态框在移动端也能正常工作 */
+@media (max-width: 575.98px) {
+    /* 移动端编辑模态框样式 */
+    .modal-dialog.edit-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.edit-modal .modal-content {
+        border-radius: 0 !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+    }
+
+    .modal-dialog.edit-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+
+    .modal-dialog.edit-modal .modal-body {
+        padding: 1rem !important;
+        height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer {
+        padding: 0.75rem 1rem !important;
+        border-top: 1px solid #dee2e6 !important;
+        background: #fff !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.edit-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* 移动端删除确认模态框样式 */
+    .modal-dialog.delete-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-content {
+        border-radius: 0 !important;
+        height: 100vh !important;
+    }
+
+    .modal-dialog.delete-modal .modal-header {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body {
+        padding: 2rem 1.5rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body i {
+        font-size: 3rem !important;
+        color: #ffc107 !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body p {
+        font-size: 1.1rem !important;
+        margin: 0 !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-body small {
+        font-size: 0.9rem !important;
+        text-align: center !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer {
+        padding: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .modal-dialog.delete-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+        height: 38px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
 </style>
