@@ -236,6 +236,34 @@ if (!function_exists('formatAmount')) {
                     </td>
                     <?php endif; ?>
                 </tr>
+                <!-- 删除确认Modal -->
+                <div class="modal fade" id="deleteModal<?php echo $record['id']; ?>" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered delete-modal" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="bi bi-trash me-2"></i>确认删除
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <i class="bi bi-exclamation-triangle-fill text-warning fs-1 mb-3"></i>
+                                <p class="mb-2">确定要删除这条记录吗？</p>
+                                <small class="text-muted d-block mb-3">此操作不可恢复。</small>
+                                <form action="manage.php" method="post" class="d-flex flex-column gap-2">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-trash me-1"></i>确认删除
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        <i class="bi bi-x-lg me-1"></i>取消
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </tbody>
@@ -368,118 +396,93 @@ if (!function_exists('formatAmount')) {
     </div>
 </div>
 
-<!-- 删除确认Modal -->
-<div class="modal fade" id="deleteModal<?php echo $record['id']; ?>" tabindex="-1" role="dialog">
-    <div class="modal-dialog delete-modal" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="bi bi-trash me-2"></i>确认删除
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
-            </div>
-            <div class="modal-body">
-                <i class="bi bi-exclamation-triangle-fill text-warning d-block"></i>
-                <p>确定要删除这条记录吗？</p>
-                <small class="text-muted">此操作不可恢复。</small>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                    <div class="d-none d-sm-flex align-items-center">
-                        <i class="bi bi-x-lg"></i>
-                        <span class="ms-1">取消</span>
-                    </div>
-                    <div class="d-sm-none d-flex flex-column align-items-center w-100">
-                        <i class="bi bi-x-lg"></i>
-                        <span>取消</span>
-                    </div>
-                </button>
-                <form action="manage.php" method="post" class="d-inline">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <div class="d-none d-sm-flex align-items-center">
-                            <i class="bi bi-trash"></i>
-                            <span class="ms-1">确认删除</span>
-                        </div>
-                        <div class="d-sm-none d-flex flex-column align-items-center w-100">
-                            <i class="bi bi-trash"></i>
-                            <span>删除</span>
-                        </div>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <style>
-.modal-dialog {
+.modal-dialog.edit-modal {
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+
+.modal-dialog.edit-modal .modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-dialog.edit-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.modal-dialog.edit-modal .form-control,
+.modal-dialog.edit-modal .form-select {
+    width: 100%;
+    max-width: 100%;
+}
+
+.modal-dialog.edit-modal .mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+@media (max-width: 576px) {
+    .modal-dialog.edit-modal {
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+    
+    .modal-dialog.edit-modal .modal-content {
+        height: 100vh !important;
+        border-radius: 0 !important;
+        border: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .modal-dialog.edit-modal .modal-header {
+        padding: 1rem !important;
+        border-bottom: 1px solid #dee2e6 !important;
+        flex: 0 0 auto !important;
+    }
+    
+    .modal-dialog.edit-modal .modal-body {
+        padding: 1rem !important;
+        flex: 1 1 auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        height: auto !important;
+    }
+    
+    .modal-dialog.edit-modal .modal-footer {
+        padding: 1rem !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        border-top: 1px solid #dee2e6 !important;
+        flex: 0 0 auto !important;
+    }
+    
+    .modal-dialog.edit-modal .form-control,
+    .modal-dialog.edit-modal .form-select {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .modal-dialog.edit-modal .modal-footer .btn {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+}
+
+/* 其他模态框样式 */
+.modal-dialog:not(.edit-modal) {
     max-width: 95vw;
     max-height: 95vh;
     margin: 10px auto;
 }
-.modal-dialog-centered {
+
+.modal-dialog-centered:not(.edit-modal) {
     display: flex;
     align-items: center;
     min-height: calc(100% - 20px);
 }
-/* 编辑模态框样式 */
-.modal-dialog.edit-modal {
-    max-width: 500px !important;
-    width: auto !important;
-    margin: 1.75rem auto;
-    height: auto !important;
-}
-.modal-dialog.edit-modal .modal-content {
-    width: 100%;
-    height: auto;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    border-radius: 0.3rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-}
-.modal-dialog.edit-modal .modal-header {
-    flex: 0 0 auto;
-    padding: 1rem;
-    border-bottom: 1px solid #dee2e6;
-}
-.modal-dialog.edit-modal .modal-body {
-    flex: 1 1 auto;
-    padding: 1rem;
-    overflow-y: auto;
-}
-.modal-dialog.edit-modal .modal-footer {
-    flex: 0 0 auto;
-    padding: 1rem;
-    border-top: 1px solid #dee2e6;
-    background: #fff;
-    position: sticky;
-    bottom: 0;
-}
-@media (max-width: 576px) {
-    .modal-dialog.edit-modal {
-        margin: 0.5rem auto;
-        width: calc(100% - 1rem) !important;
-        max-height: calc(100vh - 1rem);
-    }
-    
-    .modal-dialog.edit-modal .modal-content {
-        height: calc(100vh - 1rem);
-        border-radius: 0.3rem;
-    }
-    
-    .modal-dialog.edit-modal .modal-body {
-        padding: 0.75rem;
-    }
-    
-    .modal-dialog.edit-modal .modal-footer {
-        padding: 0.75rem;
-    }
-}
+
 /* 修改模态框背景色 */
 .modal.fade.show {
     background-color: rgba(0, 0, 0, 0.1) !important;
@@ -505,13 +508,38 @@ if (!function_exists('formatAmount')) {
         -webkit-overflow-scrolling: touch;
     }
 }
-/* 调整表单元素间距 */
+/* 调整表单元素间距和高度 */
+.modal-dialog.edit-modal .form-control,
+.modal-dialog.edit-modal .form-select {
+    height: 36px;
+    padding: 0.375rem 0.75rem;
+}
+
+.modal-dialog.edit-modal .form-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
 .modal-dialog.edit-modal .mb-3 {
     margin-bottom: 0.75rem !important;
 }
-.modal-dialog.edit-modal .form-label {
-    margin-bottom: 0.25rem;
+
+@media (max-width: 576px) {
+    .modal-dialog.edit-modal .form-control,
+    .modal-dialog.edit-modal .form-select {
+        height: 38px;
+    }
+    
+    .modal-dialog.edit-modal .form-label {
+        margin-bottom: 0.2rem;
+        font-size: 0.875rem;
+    }
+    
+    .modal-dialog.edit-modal .mb-3 {
+        margin-bottom: 0.5rem !important;
+    }
 }
+
 /* 调整预览图片容器 */
 .modal-dialog.edit-modal .preview-image-container {
     max-height: 120px;
@@ -593,52 +621,69 @@ if (!function_exists('formatAmount')) {
 
 /* 删除确认模态框样式 */
 .modal-dialog.delete-modal {
-    max-width: 320px !important;
+    max-width: 320px;
     margin: 1.75rem auto;
 }
+
 .modal-dialog.delete-modal .modal-content {
     border-radius: 0.3rem;
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 }
+
 .modal-dialog.delete-modal .modal-header {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #dee2e6;
 }
-.modal-dialog.delete-modal .modal-header .modal-title {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-}
+
 .modal-dialog.delete-modal .modal-body {
-    padding: 1.25rem 1rem;
+    padding: 2rem 1rem;
     text-align: center;
 }
-.modal-dialog.delete-modal .modal-body i {
-    font-size: 2rem !important;
-    margin-bottom: 0.75rem !important;
+
+.modal-dialog.delete-modal .modal-body form {
+    max-width: 200px;
+    margin: 0 auto;
 }
-.modal-dialog.delete-modal .modal-body p {
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem !important;
-}
-.modal-dialog.delete-modal .modal-body small {
-    font-size: 0.85rem;
-}
-.modal-dialog.delete-modal .modal-footer {
-    padding: 0.5rem 0.75rem;
-    border-top: 1px solid #dee2e6;
-    justify-content: center;
-    gap: 0.5rem;
-}
-.modal-dialog.delete-modal .btn {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.75rem;
-}
+
 @media (max-width: 576px) {
     .modal-dialog.delete-modal {
-        margin: 1rem auto;
-        width: calc(100% - 2rem) !important;
-        max-width: 300px !important;
+        margin: 0;
+        width: 100%;
+        max-width: none;
+        height: 100vh;
+    }
+
+    .modal-dialog.delete-modal .modal-content {
+        height: 100vh;
+        border: none;
+        border-radius: 0;
+    }
+
+    .modal-dialog.delete-modal .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        padding: 2rem 1rem;
+    }
+
+    .modal-dialog.delete-modal .modal-body form {
+        width: 100%;
+        max-width: none;
+    }
+
+    .modal-dialog.delete-modal .modal-body form button {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-dialog.delete-modal .modal-body form button i {
+        margin-right: 0.5rem;
     }
 }
 
@@ -2246,5 +2291,34 @@ document.addEventListener('DOMContentLoaded', function() {
             button.setAttribute('aria-label', '最大化');
         }
     }
+
+    // 为所有删除按钮添加点击事件
+    document.querySelectorAll('.delete-record').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const recordId = this.getAttribute('data-id');
+            const modalId = `deleteModal${recordId}`;
+            const modalElement = document.getElementById(modalId);
+            
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                
+                // 监听模态框隐藏事件
+                modalElement.addEventListener('hidden.bs.modal', function() {
+                    // 移除所有遮罩层
+                    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                        backdrop.remove();
+                    });
+                    // 移除body上的modal相关类和样式
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('padding-right');
+                    document.body.style.removeProperty('overflow');
+                }, { once: true }); // 使用once确保事件监听器只执行一次
+                
+                modal.show();
+            }
+        });
+    });
 });
+</script> 
 </script> 

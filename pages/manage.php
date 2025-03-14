@@ -293,95 +293,86 @@ require_once '../includes/header.php';
                 <div class="modal-body">
                     <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
-                    
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="editDate<?php echo $record['id']; ?>" class="form-label">日期</label>
-                            <input type="date" class="form-control" 
-                                   id="editDate<?php echo $record['id']; ?>" 
-                                   name="date" value="<?php echo $record['date']; ?>" required>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editDate<?php echo $record['id']; ?>" class="form-label">日期</label>
+                                <input type="date" class="form-control" id="editDate<?php echo $record['id']; ?>" name="date" value="<?php echo $record['date']; ?>" required>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="editAmount<?php echo $record['id']; ?>" class="form-label">金额</label>
-                            <input type="number" class="form-control" 
-                                   id="editAmount<?php echo $record['id']; ?>" 
-                                   name="amount" step="0.01" 
-                                   value="<?php echo $record['amount']; ?>" required>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editType<?php echo $record['id']; ?>" class="form-label">类型</label>
+                                <select class="form-select" id="editType<?php echo $record['id']; ?>" name="type" required onchange="updateEditCategories(this.value, <?php echo $record['id']; ?>, <?php echo $record['category_id']; ?>)">
+                                    <option value="收入" <?php echo $record['type'] === '收入' ? 'selected' : ''; ?>>收入</option>
+                                    <option value="支出" <?php echo $record['type'] === '支出' ? 'selected' : ''; ?>>支出</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editCategory<?php echo $record['id']; ?>" class="form-label">分类</label>
+                                <select class="form-select" id="editCategory<?php echo $record['id']; ?>" name="category_id" required>
+                                    <option value="">请选择分类</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="editType<?php echo $record['id']; ?>" class="form-label">类型</label>
-                            <select class="form-select" id="editType<?php echo $record['id']; ?>" 
-                                    name="type" required onchange="updateEditCategories(this.value, <?php echo $record['id']; ?>, <?php echo $record['category_id']; ?>)">
-                                <option value="收入" <?php echo $record['type'] === '收入' ? 'selected' : ''; ?>>收入</option>
-                                <option value="支出" <?php echo $record['type'] === '支出' ? 'selected' : ''; ?>>支出</option>
-                            </select>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editAmount<?php echo $record['id']; ?>" class="form-label">金额</label>
+                                <input type="number" class="form-control" id="editAmount<?php echo $record['id']; ?>" name="amount" step="0.01" value="<?php echo $record['amount']; ?>" required>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="editCategory<?php echo $record['id']; ?>" class="form-label">分类</label>
-                            <select class="form-select" id="editCategory<?php echo $record['id']; ?>" 
-                                    name="category_id" required>
-                                <option value="">请选择分类</option>
-                            </select>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editDescription<?php echo $record['id']; ?>" class="form-label">描述</label>
+                                <input type="text" class="form-control" id="editDescription<?php echo $record['id']; ?>" name="description" value="<?php echo xssFilter($record['description']); ?>" required>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="editDescription<?php echo $record['id']; ?>" class="form-label">描述</label>
-                        <input type="text" class="form-control" 
-                               id="editDescription<?php echo $record['id']; ?>" 
-                               name="description" 
-                               value="<?php echo xssFilter($record['description']); ?>" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="editAttachment<?php echo $record['id']; ?>" class="form-label">附件</label>
-                        <?php if ($record['attachment']): ?>
-                            <div class="current-attachment mb-2">
-                                <?php
-                                $filePath = $record['attachment'];
-                                $isImage = strpos($filePath, 'images/') !== false;
-                                $uploadPath = getUploadPath($filePath);
-                                
-                                if ($isImage): ?>
-                                    <div class="preview-image-container">
-                                        <img src="<?php echo $uploadPath; ?>" 
-                                             class="preview-image" 
-                                             alt="当前图片">
-                                    </div>
-                                <?php else: 
-                                    $fileName = basename($record['attachment']);
-                                ?>
-                                    <div class="current-file">
-                                        <i class="bi bi-file-earmark me-1"></i>
-                                        <span><?php echo $fileName; ?></span>
+                        
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="editAttachment<?php echo $record['id']; ?>" class="form-label">附件</label>
+                                <?php if ($record['attachment']): ?>
+                                    <div class="current-attachment mb-2">
+                                        <?php
+                                        $filePath = $record['attachment'];
+                                        $isImage = strpos($filePath, 'images/') !== false;
+                                        $uploadPath = getUploadPath($filePath);
+                                        
+                                        if ($isImage): ?>
+                                            <div class="preview-image-container">
+                                                <img src="<?php echo $uploadPath; ?>" class="preview-image" alt="当前图片">
+                                            </div>
+                                        <?php else: 
+                                            $fileName = basename($record['attachment']);
+                                        ?>
+                                            <div class="current-file">
+                                                <i class="bi bi-file-earmark me-1"></i>
+                                                <span><?php echo $fileName; ?></span>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <div class="input-group">
-                            <input type="file" class="form-control edit-file-input" 
-                                   id="editAttachment<?php echo $record['id']; ?>" 
-                                   name="attachment"
-                                   accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx"
-                                   data-preview-container="editPreviewContainer<?php echo $record['id']; ?>">
-                        </div>
-                        <div class="form-text">支持图片、PDF、Word、Excel等格式</div>
-                        
-                        <!-- 添加预览容器 -->
-                        <div id="editPreviewContainer<?php echo $record['id']; ?>" class="mt-3 d-none">
-                            <div class="card" style="max-width: 300px;">
-                                <div class="card-body p-2 text-center position-relative">
-                                    <div style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center;">
-                                        <img id="editImagePreview<?php echo $record['id']; ?>" class="rounded edit-image-preview" 
-                                             style="max-width: 100%; max-height: 150px; width: auto; height: auto; object-fit: contain;" 
-                                             alt="图片预览">
+                                
+                                <div class="input-group">
+                                    <input type="file" class="form-control edit-file-input" id="editAttachment<?php echo $record['id']; ?>" name="attachment" accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx" data-preview-container="editPreviewContainer<?php echo $record['id']; ?>">
+                                </div>
+                                <div class="form-text">支持图片、PDF、Word、Excel等格式</div>
+                                
+                                <div id="editPreviewContainer<?php echo $record['id']; ?>" class="mt-3 d-none">
+                                    <div class="card" style="max-width: 300px;">
+                                        <div class="card-body p-2 text-center position-relative">
+                                            <div style="width: 100%; height: 150px; display: flex; align-items: center; justify-content: center;">
+                                                <img id="editImagePreview<?php echo $record['id']; ?>" class="rounded edit-image-preview" style="max-width: 100%; max-height: 150px; width: auto; height: auto; object-fit: contain;" alt="图片预览">
+                                            </div>
+                                            <button type="button" class="btn-close position-absolute top-0 end-0 m-2 remove-preview" aria-label="关闭预览"></button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn-close position-absolute top-0 end-0 m-2 remove-preview" 
-                                            aria-label="关闭预览"></button>
                                 </div>
                             </div>
                         </div>
@@ -395,46 +386,6 @@ require_once '../includes/header.php';
         </div>
     </div>
 </div>
-
-<!-- 删除确认Modal -->
-<div class="modal fade" id="deleteModal<?php echo $record['id']; ?>" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 320px;">
-        <div class="modal-content">
-            <div class="modal-header py-2">
-                <h5 class="modal-title fs-6">确认删除</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body py-3">
-                <p class="mb-0 text-center">确定要删除这条记录吗？此操作不可恢复。</p>
-            </div>
-            <div class="modal-footer py-2">
-                <form action="manage.php" method="post" class="d-flex gap-2 w-100 justify-content-center">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-danger btn-sm">确认删除</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 图片预览Modal -->
-<?php if ($record['attachment'] && strpos($record['attachment'], 'images/') !== false): ?>
-<div class="modal fade" id="imageModal<?php echo $record['id']; ?>" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">图片预览</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img src="../uploads/<?php echo $record['attachment']; ?>" class="img-fluid" alt="附件图片">
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
 <?php endforeach; ?>
 
 <script>
