@@ -628,16 +628,19 @@ if (!function_exists('formatAmount')) {
 .modal-dialog.delete-modal .modal-content {
     border-radius: 0.3rem;
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+    background-color: #fff !important;
 }
 
 .modal-dialog.delete-modal .modal-header {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #dee2e6;
+    background-color: #fff !important;
 }
 
 .modal-dialog.delete-modal .modal-body {
     padding: 2rem 1rem;
     text-align: center;
+    background-color: #fff !important;
 }
 
 .modal-dialog.delete-modal .modal-body form {
@@ -657,33 +660,45 @@ if (!function_exists('formatAmount')) {
         height: 100vh;
         border: none;
         border-radius: 0;
+        background-color: #fff !important;
+    }
+
+    .modal-dialog.delete-modal .modal-header {
+        padding: 0.75rem 1rem;
+        background-color: #fff !important;
     }
 
     .modal-dialog.delete-modal .modal-body {
+        padding: 2rem 1.5rem;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        flex: 1;
-        padding: 2rem 1rem;
+        gap: 1rem;
+        background-color: #fff !important;
     }
 
-    .modal-dialog.delete-modal .modal-body form {
-        width: 100%;
-        max-width: none;
+    .modal-dialog.delete-modal .modal-body i {
+        font-size: 3rem;
+        color: #ffc107;
     }
 
-    .modal-dialog.delete-modal .modal-body form button {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 0.5rem;
+    .modal-dialog.delete-modal .modal-body p {
+        font-size: 1.1rem;
+        margin: 0;
+        text-align: center;
+    }
+
+    .modal-dialog.delete-modal .modal-body small {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .modal-dialog.delete-modal .modal-footer {
+        padding: 1rem;
         display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal-dialog.delete-modal .modal-body form button i {
-        margin-right: 0.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        background-color: #fff !important;
     }
 }
 
@@ -1241,9 +1256,21 @@ if (!function_exists('formatAmount')) {
     margin-bottom: 0;
 }
 
+/* 确保表头不换行 */
+.table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 设置说明列宽度 */
+.table td:nth-child(5) {
+    min-width: 160px;  /* 设置最小宽度以容纳10个汉字 */
+}
+
 @media (max-width: 575.98px) {
     .description-text {
-        font-size: 0.875rem;
+        font-size: 0.875rem;  /* 恢复原来的字体大小 */
     }
 }
 
@@ -1540,6 +1567,21 @@ if (!function_exists('formatAmount')) {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+    }
+}
+
+/* 调整表格列之间的间距 */
+@media (max-width: 575.98px) {
+    .table td {
+        padding: 0.25rem !important;  /* 减小单元格内边距 */
+    }
+    
+    /* 保持操作列的样式不变 */
+    .table td:last-child {
+        padding: 0 !important;
+        height: 46px !important;
+        white-space: normal !important;
+        width: 60px !important;
     }
 }
 </style>
