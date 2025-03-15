@@ -530,7 +530,7 @@ if (!function_exists('formatAmount')) {
         height: 38px;
     }
     
-    .modal-dialog.edit-modal .form-label {
+.modal-dialog.edit-modal .form-label {
         margin-bottom: 0.2rem;
         font-size: 0.875rem;
     }
@@ -677,27 +677,27 @@ if (!function_exists('formatAmount')) {
         background-color: #fff !important;
     }
 
-    .modal-dialog.delete-modal .modal-body i {
+.modal-dialog.delete-modal .modal-body i {
         font-size: 3rem;
         color: #ffc107;
-    }
+}
 
-    .modal-dialog.delete-modal .modal-body p {
+.modal-dialog.delete-modal .modal-body p {
         font-size: 1.1rem;
         margin: 0;
         text-align: center;
-    }
+}
 
-    .modal-dialog.delete-modal .modal-body small {
+.modal-dialog.delete-modal .modal-body small {
         font-size: 0.9rem;
         text-align: center;
-    }
+}
 
-    .modal-dialog.delete-modal .modal-footer {
+.modal-dialog.delete-modal .modal-footer {
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+    gap: 0.5rem;
         background-color: #fff !important;
     }
 }
@@ -879,7 +879,7 @@ if (!function_exists('formatAmount')) {
         bottom: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        display: flex !important;
+    display: flex !important;
         flex-direction: column !important;
         gap: 0.5rem !important;
     }
@@ -900,7 +900,7 @@ if (!function_exists('formatAmount')) {
         max-width: 100% !important;
         height: 100vh !important;
     }
-
+    
     .modal-dialog.delete-modal .modal-content {
         border-radius: 0 !important;
         height: 100vh !important;
@@ -1644,6 +1644,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // 监听返回按钮和手势
     window.addEventListener('popstate', handleHistoryChange);
     
+    // 为所有最大化按钮添加点击事件
+    document.querySelectorAll('.maximize-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            const modal = this.closest('.modal');
+            const icon = this.querySelector('i');
+            
+            if (modal.classList.contains('maximized')) {
+                restoreModal(modal, icon, this);
+            } else {
+                maximizeModal(modal, icon, this);
+            }
+        });
+    });
+    
     // 修改图片预览相关代码
     (function() {
         const imagePreviewModal = document.getElementById('imagePreviewModal');
@@ -1723,6 +1738,13 @@ document.addEventListener('DOMContentLoaded', function() {
             closeButton.blur();
             modalDialog.style.opacity = '0';
             modalDialog.style.transition = '';
+            
+            // 确保最大化状态被重置
+            if (this.classList.contains('maximized')) {
+                const maxButton = this.querySelector('.maximize-btn');
+                const icon = maxButton ? maxButton.querySelector('i') : null;
+                restoreModal(this, icon, maxButton);
+            }
         });
 
         imagePreviewModal.addEventListener('hidden.bs.modal', function() {
@@ -1868,10 +1890,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 监听PDF模态框事件
+    pdfPreviewModal.addEventListener('hide.bs.modal', function() {
+        // 确保最大化状态被重置
+        if (this.classList.contains('maximized')) {
+            const maxButton = this.querySelector('.maximize-btn');
+            const icon = maxButton ? maxButton.querySelector('i') : null;
+            restoreModal(this, icon, maxButton);
+        }
+    });
+    
     pdfPreviewModal.addEventListener('hidden.bs.modal', function() {
         isModalOpen = false;
         currentModal = null;
         pdfViewer.src = '';
+        
+        // 移除backdrop和样式
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('padding-right');
+        document.body.style.removeProperty('overflow');
         
         const elementToFocus = pdfLastFocusedElement;
         pdfLastFocusedElement = null;
@@ -2005,6 +2042,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoPlayer = document.getElementById('videoPlayer');
     const videoPlayOverlay = document.getElementById('videoPlayOverlay');
     const mobileVideoContainer = document.getElementById('mobileVideoContainer');
+    const mobileVideoPlayer = document.getElementById('mobileVideoPlayer');
+    const mobileVideoPlayOverlay = document.getElementById('mobileVideoPlayOverlay');
     const videoModalDialog = videoModal ? videoModal.querySelector('.modal-dialog') : null;
     let videoModal_bs = null;
     let activeVideoPlayer = null;
@@ -2022,7 +2061,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.paddingRight = '0px';
             // 显示播放按钮
             if (videoPlayOverlay) {
-                videoPlayOverlay.classList.remove('hidden');
+                videoPlayOverlay.classList.remove('d-none');
             }
         });
         
@@ -2036,6 +2075,13 @@ document.addEventListener('DOMContentLoaded', function() {
             videoModal.querySelectorAll('button').forEach(button => {
                 button.blur();
             });
+            
+            // 确保最大化状态被重置
+            if (this.classList.contains('maximized')) {
+                const maxButton = this.querySelector('.maximize-btn');
+                const icon = maxButton ? maxButton.querySelector('i') : null;
+                restoreModal(this, icon, maxButton);
+            }
         });
         
         videoModal.addEventListener('hidden.bs.modal', function() {
@@ -2050,7 +2096,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             // 重置播放按钮显示
             if (videoPlayOverlay) {
-                videoPlayOverlay.classList.remove('hidden');
+                videoPlayOverlay.classList.remove('d-none');
             }
             // 确保移除所有按钮的焦点
             videoModal.querySelectorAll('button').forEach(button => {
@@ -2068,13 +2114,13 @@ document.addEventListener('DOMContentLoaded', function() {
             videoPlayOverlay.addEventListener('click', async function() {
                 try {
                     // 隐藏播放按钮
-                    this.classList.add('hidden');
+                    this.classList.add('d-none');
                     // 播放视频
                     await videoPlayer.play();
                 } catch (error) {
                     console.warn('Video playback failed:', error);
                     // 如果播放失败，重新显示播放按钮
-                    this.classList.remove('hidden');
+                    this.classList.remove('d-none');
                 }
             });
         }
@@ -2082,21 +2128,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // 视频播放结束时显示播放按钮
         videoPlayer.addEventListener('ended', function() {
             if (videoPlayOverlay) {
-                videoPlayOverlay.classList.remove('hidden');
+                videoPlayOverlay.classList.remove('d-none');
             }
         });
         
         // 视频暂停时显示播放按钮
         videoPlayer.addEventListener('pause', function() {
             if (videoPlayOverlay) {
-                videoPlayOverlay.classList.remove('hidden');
+                videoPlayOverlay.classList.remove('d-none');
             }
         });
         
         // 视频播放时隐藏播放按钮
         videoPlayer.addEventListener('play', function() {
             if (videoPlayOverlay) {
-                videoPlayOverlay.classList.add('hidden');
+                videoPlayOverlay.classList.add('d-none');
             }
         });
     }
@@ -2132,7 +2178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileVideoContainer.style.zIndex = '9999';
                 
                 // 显示播放按钮遮罩层
-                playOverlay.classList.remove('hidden');
+                playOverlay.classList.remove('d-none');
                 
                 // 修改关闭按钮事件
                 const closeVideo = () => {
@@ -2160,13 +2206,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const startPlayback = async () => {
                     try {
                         // 隐藏播放按钮
-                        playOverlay.classList.add('hidden');
+                        playOverlay.classList.add('d-none');
                         // 播放视频
                         await mobileVideoPlayer.play();
                     } catch (error) {
                         console.warn('Video playback failed:', error);
                         // 如果播放失败，重新显示播放按钮
-                        playOverlay.classList.remove('hidden');
+                        playOverlay.classList.remove('d-none');
                     }
                 };
                 
@@ -2177,8 +2223,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // 视频播放结束时显示播放按钮
                 mobileVideoPlayer.addEventListener('ended', () => {
-                    playOverlay.classList.remove('hidden');
+                    playOverlay.classList.remove('d-none');
                 });
+                
+                // 视频播放时隐藏播放按钮
+                mobileVideoPlayer.addEventListener('play', () => {
+                    playOverlay.classList.add('d-none');
+                });
+                
+                // 视频暂停时显示播放按钮
+                mobileVideoPlayer.addEventListener('pause', () => {
+                    playOverlay.classList.remove('d-none');
+                });
+                
             } else {
                 // PC端：使用模态框播放
                 currentModal = videoModal_bs;
@@ -2210,16 +2267,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     videoPlayer.load();
                     
                     // 显示播放按钮
-                    videoPlayOverlay.classList.remove('hidden');
+                    videoPlayOverlay.classList.remove('d-none');
                     
                     // 播放按钮点击事件
                     const startPlayback = async () => {
                         try {
-                            videoPlayOverlay.classList.add('hidden');
+                            videoPlayOverlay.classList.add('d-none');
                             await videoPlayer.play();
                         } catch (error) {
                             console.warn('Video playback failed:', error);
-                            videoPlayOverlay.classList.remove('hidden');
+                            videoPlayOverlay.classList.remove('d-none');
                         }
                     };
                     
@@ -2227,11 +2284,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     videoPlayOverlay.removeEventListener('click', videoPlayOverlay._startPlayback);
                     videoPlayOverlay._startPlayback = startPlayback;
                     videoPlayOverlay.addEventListener('click', startPlayback);
-                    
-                    // 视频播放结束时显示播放按钮
-                    videoPlayer.addEventListener('ended', () => {
-                        videoPlayOverlay.classList.remove('hidden');
-                    });
                     
                     videoModal_bs.show();
                     
@@ -2262,6 +2314,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     videoModalDialog.style.opacity = '0';
                     videoModalDialog.style.transition = '';
                     videoModalDialog.style.width = '';
+                    
+                    // 确保最大化状态被重置
+                    if (this.classList.contains('maximized')) {
+                        const maxButton = this.querySelector('.maximize-btn');
+                        const icon = maxButton ? maxButton.querySelector('i') : null;
+                        restoreModal(this, icon, maxButton);
+                    }
+                    
+                    // 确保清理所有backdrops和body样式
+                    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('padding-right');
+                    document.body.style.removeProperty('overflow');
                 }, { once: true });
             }
         });
@@ -2360,6 +2425,65 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.show();
             }
         });
+    });
+
+    // 为最大化按钮添加点击事件
+    document.addEventListener('DOMContentLoaded', function() {
+        // ... existing code ...
+        
+        // 为所有最大化按钮添加点击事件
+        document.querySelectorAll('.maximize-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation(); // 阻止事件冒泡
+                const modal = this.closest('.modal');
+                const icon = this.querySelector('i');
+                
+                if (modal.classList.contains('maximized')) {
+                    restoreModal(modal, icon, this);
+                } else {
+                    maximizeModal(modal, icon, this);
+                }
+            });
+        });
+        
+        // 修复视频播放按钮不消失问题 - 在videoPlayer事件监听器中
+        if (videoPlayer) {
+            videoPlayer.addEventListener('play', function() {
+                if (videoPlayOverlay) {
+                    videoPlayOverlay.classList.add('d-none'); // 使用Bootstrap的d-none类替代hidden
+                }
+            });
+            
+            videoPlayer.addEventListener('pause', function() {
+                if (videoPlayOverlay) {
+                    videoPlayOverlay.classList.remove('d-none');
+                }
+            });
+            
+            videoPlayer.addEventListener('ended', function() {
+                if (videoPlayOverlay) {
+                    videoPlayOverlay.classList.remove('d-none');
+                }
+            });
+        }
+        
+        // 修复PC端播放按钮点击事件
+        if (videoPlayOverlay) {
+            videoPlayOverlay.addEventListener('click', async function() {
+                try {
+                    // 隐藏播放按钮
+                    this.classList.add('d-none'); // 使用Bootstrap的d-none类
+                    // 播放视频
+                    await videoPlayer.play();
+                } catch (error) {
+                    console.warn('Video playback failed:', error);
+                    // 如果播放失败，重新显示播放按钮
+                    this.classList.remove('d-none');
+                }
+            });
+        }
+        
+        // ... existing code ...
     });
 });
 </script> 
