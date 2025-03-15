@@ -1254,9 +1254,12 @@ if (!function_exists('formatAmount')) {
     max-height: 2.8em;
     line-height: 1.4;
     margin-bottom: 0;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
-/* 确保表头不换行 */
+/* 确保表头不换行，但说明列可以换行 */
 .table th {
     white-space: nowrap;
     overflow: hidden;
@@ -1266,6 +1269,10 @@ if (!function_exists('formatAmount')) {
 /* 设置说明列宽度 */
 .table td:nth-child(5) {
     min-width: 160px;  /* 设置最小宽度以容纳10个汉字 */
+    max-width: 40ch;   /* PC端限制每行最多40个字符 */
+    white-space: normal !important;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 @media (max-width: 575.98px) {
@@ -1796,16 +1803,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullDescription = document.getElementById('fullDescription');
         let descModal = null;
         
-        // 为所有说明文本添加点击事件
+        // 为所有说明文本添加点击事件，使其可以展开
+        function initDescriptionText() {
         document.querySelectorAll('.description-text').forEach(element => {
+                // 移除旧的事件监听器(如果存在)
+                const oldClickListener = element._clickListener;
+                if (oldClickListener) {
+                    element.removeEventListener('click', oldClickListener);
+                }
+                
             // 检测是否需要显示"更多"
             const isOverflowing = element.scrollHeight > element.clientHeight;
-            if (isOverflowing) {
-                element.classList.add('has-more');
+                element.classList.toggle('has-more', isOverflowing);
                 
-                // 添加点击事件
-                element.addEventListener('click', function(e) {
+                if (isOverflowing) {
+                    // 创建新的事件监听器
+                    const clickListener = function(e) {
                 e.preventDefault();
+                        e.stopPropagation();
+                        
                 const description = this.getAttribute('data-description');
                 
                 if (!descModal) {
@@ -1829,20 +1845,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         const contentWidth = Math.min(320, Math.max(280, fullDescription.offsetWidth + 40));
                         modalContent.style.width = `${contentWidth}px`;
                     });
+                    };
+                    
+                    // 保存引用以便之后移除
+                    element._clickListener = clickListener;
+                    
+                    // 添加点击事件
+                    element.addEventListener('click', clickListener);
+                }
             });
-            }
-        });
+        }
+        
+        // 初始化
+        initDescriptionText();
 
         // 在窗口大小改变时重新检查
         let resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
-        document.querySelectorAll('.description-text').forEach(element => {
-                    const isOverflowing = element.scrollHeight > element.clientHeight;
-                    element.classList.toggle('has-more', isOverflowing);
-                });
-            }, 250);
+            resizeTimeout = setTimeout(initDescriptionText, 250);
         });
     })();
 
